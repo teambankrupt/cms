@@ -9,6 +9,7 @@ import com.example.coreweb.domains.base.models.mappers.BaseMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.util.*
+import kotlin.collections.HashMap
 
 @Component
 class PreparedContentMapper @Autowired constructor(
@@ -25,12 +26,20 @@ class PreparedContentMapper @Autowired constructor(
 
             this.title = entity.title
             this.templateId = entity.template.id
-            this.placeholderValues = entity.placeholderValues
+            this.placeholderValues = HashMap()
+            entity.placeholderValues.forEach {
+                this.placeholderValues[it.key] = it.value
+            }
 
             this.status = entity.status
             this.resolvedContent = entity.resolvedContent
             this.templateTitle = entity.template.title
-            this.templatePlaceholders = entity.template.placeholders
+
+            if (this.placeholderValues.isNullOrEmpty()) {
+                entity.template.placeholders.forEach {
+                    this.placeholderValues[it] = ""
+                }
+            }
         }
 
         return dto

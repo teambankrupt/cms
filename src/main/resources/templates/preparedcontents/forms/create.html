@@ -4,7 +4,7 @@
 
     <div class="form-group">
         <label for="name">Title</label>
-        <input class="form-control form-line" type="text" name="title" id="name" placeholder="Title"
+        <input class="form-control form-line" type="text" name="title" id="name" placeholder="Title" required="required"
                th:value="${preparedcontent?.title}">
     </div>
 
@@ -15,10 +15,13 @@
             <th>Value</th>
             </thead>
             <tbody>
-            <tr th:each="ph, iter: ${preparedcontent?.templatePlaceholders}">
+            <tr th:if="${preparedcontent!=null}" th:each="pv, iter: ${preparedcontent?.placeholderValues}">
+                <td><span th:text="${pv.key}"></span></td>
+                <td><input type="text"  th:name="'placeholderValues[\''+${pv.key}+'\']'" th:value="${pv?.value}" required="required"></td>
+            </tr>
+            <tr th:if="${preparedcontent==null}" th:each="ph: ${selectedTemplate?.placeholders}">
                 <td><span th:text="${ph}"></span></td>
-                <td><span th:text="${iter.index}"></span></td>
-                <td><input type="text"  th:name="|placeholderValues[${it.index}]|"></td>
+                <td><input type="text"  th:name="'placeholderValues[\''+${ph}+'\']'" required="required"></td>
             </tr>
             </tbody>
         </table>
@@ -26,7 +29,7 @@
 
     <div class="form-group">
         <label for="template">Select a Template</label>
-        <select name="templateId" id="template">
+        <select name="templateId" id="template" required="required">
             <option th:each="template: ${templates}" th:value="${template?.id}" th:text="${template?.title}"></option>
         </select>
     </div>

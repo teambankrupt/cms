@@ -23,6 +23,7 @@
                 <span th:utext="${contenttemplate?.content}"></span>
             </p>
 
+            <a th:href="@{/admin/prepared-contents/create?template_id=}+${contenttemplate?.id}" class="btn btn-primary pull-right">Use Template</a>
         </div>
 
     </div>

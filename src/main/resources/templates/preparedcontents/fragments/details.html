@@ -7,14 +7,21 @@
                 PreparedContent Details <small>Description text here...</small>
             </h2>
             <div class="pull-right">
-                <a th:href="@{/admin/prepared-contents/create}" class="btn btn-primary">Create New</a>
+<!--                <a th:href="@{/admin/prepared-contents/create}" class="btn btn-primary">Create New</a>-->
                 <a th:href="@{/admin/prepared-contents/}+${preparedcontent?.id}+@{/update}" class="btn btn-primary">Edit</a>
-                <a th:href="@{/admin/prepared-contents}" class="btn btn-primary">All PreparedContents</a>
+                <a th:href="@{/admin/prepared-contents}" class="btn btn-primary">All Contents</a>
             </div>
         </div>
 
         <div class="body">
-            PreparedContents(<span th:text="${preparedcontent?.id}"></span>) details goes here
+            <h3>
+                <span th:text="${preparedcontent?.title}"></span>
+            </h3>
+            <hr/>
+            <p>
+                <span th:utext="${preparedcontent?.resolvedContent}"></span>
+            </p>
+
         </div>
 
     </div>

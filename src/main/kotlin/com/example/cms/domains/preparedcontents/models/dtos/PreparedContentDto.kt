@@ -25,7 +25,7 @@ class PreparedContentDto : BaseDto() {
     @NotEmpty
     @JsonProperty("placeholder_values")
     @ApiModelProperty(required = true)
-    lateinit var placeholderValues: MutableMap<String, String>
+    var placeholderValues: HashMap<String, String> = HashMap()
 
     /*
     READONLY
@@ -41,10 +41,5 @@ class PreparedContentDto : BaseDto() {
     @ApiModelProperty(readOnly = true)
     @JsonProperty("template_title")
     var templateTitle: String? = null
-
-    @ApiModelProperty(readOnly = true)
-    @JsonProperty("template_placeholders")
-    var templatePlaceholders: Set<String>? = null
-
 
 }

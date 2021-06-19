@@ -1,5 +1,6 @@
 package com.example.cms.domains.preparedcontents.controllers.web
 
+import com.example.cms.domains.contenttemplates.models.entities.ContentTemplate
 import com.example.cms.domains.contenttemplates.services.ContentTemplateService
 import com.example.cms.domains.preparedcontents.models.dtos.PreparedContentDto
 import com.example.cms.domains.preparedcontents.models.mappers.PreparedContentMapper
@@ -49,7 +50,7 @@ class PreparedContentWebController @Autowired constructor(
         return "preparedcontents/fragments/details"
     }
 
-    @GetMapping(Route.V1.ADMIN_CREATE_PREPAREDCONTENT_PAGE)
+    //    @GetMapping(Route.V1.ADMIN_CREATE_PREPAREDCONTENT_PAGE)
     override fun createPage(model: Model): String {
         val templates = this.contentTemplateService.search(
             PageableParams.of(
@@ -57,6 +58,22 @@ class PreparedContentWebController @Autowired constructor(
             )
         )
         model.addAttribute("templates", templates)
+        return "preparedcontents/fragments/create"
+    }
+
+    @GetMapping(Route.V1.ADMIN_CREATE_PREPAREDCONTENT_PAGE)
+    fun createPag(
+        model: Model,
+        @RequestParam("template_id") templateId: Long
+    ): String {
+        val templates = this.contentTemplateService.search(
+            PageableParams.of(
+                null, 0, 100, SortByFields.ID, Sort.Direction.DESC
+            )
+        )
+        val selectedTemplate = this.contentTemplateService.find(templateId).orElseThrow { ExceptionUtil.notFound(ContentTemplate::class.java,templateId) }
+        model.addAttribute("templates", templates)
+        model.addAttribute("selectedTemplate", selectedTemplate)
         return "preparedcontents/fragments/create"
     }
 
