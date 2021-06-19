@@ -23,11 +23,14 @@ class PreparedContentMapper @Autowired constructor(
             this.createdAt = entity.createdAt
             this.updatedAt = entity.updatedAt
 
+            this.title = entity.title
             this.templateId = entity.template.id
             this.placeholderValues = entity.placeholderValues
 
             this.status = entity.status
             this.resolvedContent = entity.resolvedContent
+            this.templateTitle = entity.template.title
+            this.templatePlaceholders = entity.template.placeholders
         }
 
         return dto
@@ -37,6 +40,7 @@ class PreparedContentMapper @Autowired constructor(
         val entity = exEntity ?: PreparedContent()
 
         entity.apply {
+            this.title = dto.title
             this.status = ContentStatuses.DRAFT
             this.placeholderValues = dto.placeholderValues
             this.template = templateRepository.find(dto.templateId)

@@ -17,7 +17,7 @@ import com.example.coreweb.utils.PageableParams
 import org.springframework.data.domain.Sort
 
 @RestController
-@Api(tags = ["PreparedContents"], description = "Description about PreparedContents")
+@Api(tags = ["Prepared Contents"], description = "Description about PreparedContents")
 class PreparedContentController @Autowired constructor(
     private val preparedContentService: PreparedContentService,
     private val preparedContentMapper: PreparedContentMapper

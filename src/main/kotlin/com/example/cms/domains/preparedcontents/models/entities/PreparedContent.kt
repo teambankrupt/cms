@@ -11,6 +11,9 @@ import javax.persistence.*
 @Table(name = "prepared_contents", schema = "cms")
 class PreparedContent : BaseEntity() {
 
+    @Column(name = "title", nullable = false)
+    lateinit var title: String
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "template_id", nullable = false)
     lateinit var template: ContentTemplate

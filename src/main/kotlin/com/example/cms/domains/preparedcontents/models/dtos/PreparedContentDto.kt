@@ -5,10 +5,16 @@ import com.example.coreweb.domains.base.models.dtos.BaseDto
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.annotations.ApiModelProperty
 import javax.validation.constraints.Min
+import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
 
 class PreparedContentDto : BaseDto() {
+
+    @NotBlank
+    @JsonProperty("title")
+    @ApiModelProperty(required = true)
+    lateinit var title: String
 
     @Min(1)
     @JsonProperty("template_id")
@@ -31,6 +37,14 @@ class PreparedContentDto : BaseDto() {
     @ApiModelProperty(readOnly = true)
     @JsonProperty("resolved_content")
     var resolvedContent: String? = null
+
+    @ApiModelProperty(readOnly = true)
+    @JsonProperty("template_title")
+    var templateTitle: String? = null
+
+    @ApiModelProperty(readOnly = true)
+    @JsonProperty("template_placeholders")
+    var templatePlaceholders: Set<String>? = null
 
 
 }

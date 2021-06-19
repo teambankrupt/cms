@@ -7,14 +7,22 @@
                 ContentTemplate Details <small>Description text here...</small>
             </h2>
             <div class="pull-right">
-                <a th:href="@{/admin/contenttemplates/create}" class="btn btn-primary">Create New</a>
-                <a th:href="@{/admin/contenttemplates/}+${contenttemplate?.id}+@{/update}" class="btn btn-primary">Edit</a>
-                <a th:href="@{/admin/contenttemplates}" class="btn btn-primary">All ContentTemplates</a>
+                <a th:href="@{/admin/content-templates/create}" class="btn btn-primary">Create New</a>
+                <a th:href="@{/admin/content-templates/}+${contenttemplate?.id}+@{/update}"
+                   class="btn btn-primary">Edit</a>
+                <a th:href="@{/admin/content-templates}" class="btn btn-primary">All ContentTemplates</a>
             </div>
         </div>
 
         <div class="body">
-            ContentTemplates(<span th:text="${contenttemplate?.id}"></span>) details goes here
+            <h3>
+                <span th:text="${contenttemplate?.title}"></span>
+            </h3>
+            <hr/>
+            <p>
+                <span th:utext="${contenttemplate?.content}"></span>
+            </p>
+
         </div>
 
     </div>

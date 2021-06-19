@@ -1,12 +1,38 @@
-<form class="form" method="post" th:action="@{/admin/preparedcontents/}+${preparedcontent!=null?preparedcontent?.id:''}">
+<form class="form" method="post"
+      th:action="@{/admin/prepared-contents/}+${preparedcontent!=null?preparedcontent?.id:''}"
+      xmlns="http://www.w3.org/1999/html">
 
     <div class="form-group">
-        <label for="name">Name</label>
-        <input class="form-control form-line" type="text" name="name" id="name" placeholder="Name">
+        <label for="name">Title</label>
+        <input class="form-control form-line" type="text" name="title" id="name" placeholder="Title"
+               th:value="${preparedcontent?.title}">
     </div>
 
     <div class="form-group">
-        <a th:href="@{/admin/preparedcontents}" class="btn btn-warning">Cancel</a>
+        <table class="table table-striped">
+            <thead>
+            <th>Placeholder</th>
+            <th>Value</th>
+            </thead>
+            <tbody>
+            <tr th:each="ph, iter: ${preparedcontent?.templatePlaceholders}">
+                <td><span th:text="${ph}"></span></td>
+                <td><span th:text="${iter.index}"></span></td>
+                <td><input type="text"  th:name="|placeholderValues[${it.index}]|"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="form-group">
+        <label for="template">Select a Template</label>
+        <select name="templateId" id="template">
+            <option th:each="template: ${templates}" th:value="${template?.id}" th:text="${template?.title}"></option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <a th:href="@{/admin/prepared-contents}" class="btn btn-warning">Cancel</a>
         <button type="submit" class="btn btn-success">Submit</button>
     </div>
 

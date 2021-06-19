@@ -22,20 +22,6 @@ class ContentTemplateWebController @Autowired constructor(
     private val contentTemplateMapper: ContentTemplateMapper
 ) : CrudWebControllerV3<ContentTemplateDto> {
 
-    /*
-        COPY THESE URLS TO ROUTE FILE AND ADJUST
-        ------------------------------------------------------
-        // ContentTemplates (Admin)
-        const val ADMIN_SEARCH_CONTENTTEMPLATES = "$ADMIN/contenttemplates"
-        const val ADMIN_CREATE_CONTENTTEMPLATE_PAGE = "$ADMIN/contenttemplates/create"
-        const val ADMIN_CREATE_CONTENTTEMPLATE = "$ADMIN/contenttemplates"
-        const val ADMIN_FIND_CONTENTTEMPLATE = "$ADMIN/contenttemplates/{id}"
-        const val ADMIN_UPDATE_CONTENTTEMPLATE_PAGE = "$ADMIN/contenttemplates/{id}/update"
-        const val ADMIN_UPDATE_CONTENTTEMPLATE = "$ADMIN/contenttemplates/{id}"
-        const val ADMIN_DELETE_CONTENTTEMPLATE = "$ADMIN/contenttemplates/{id}/delete"
-        ------------------------------------------------------
-    */
-
     @GetMapping(Route.V1.ADMIN_SEARCH_CONTENTTEMPLATES)
     override fun search(@RequestParam("q", required = false) query: String?,
                         @RequestParam("page", defaultValue = "0") page: Int,

@@ -23,18 +23,6 @@ class ContentTemplateController @Autowired constructor(
     private val contentTemplateMapper: ContentTemplateMapper
 ) : CrudControllerV3<ContentTemplateDto> {
 
-    /*
-        COPY THESE URLS TO ROUTE FILE AND ADJUST
-        ------------------------------------------------------
-        // ContentTemplates
-        const val SEARCH_CONTENTTEMPLATES = "$API$VERSION/contenttemplates"
-        const val CREATE_CONTENTTEMPLATE = "$API$VERSION/contenttemplates"
-        const val FIND_CONTENTTEMPLATE = "$API$VERSION/contenttemplates/{id}"
-        const val UPDATE_CONTENTTEMPLATE = "$API$VERSION/contenttemplates/{id}"
-        const val DELETE_CONTENTTEMPLATE = "$API$VERSION/contenttemplates/{id}"
-        ------------------------------------------------------
-    */
-
     @GetMapping(Route.V1.SEARCH_CONTENTTEMPLATES)
     override fun search(@RequestParam("q", required = false) query: String?,
                         @RequestParam("page", defaultValue = "0") page: Int,

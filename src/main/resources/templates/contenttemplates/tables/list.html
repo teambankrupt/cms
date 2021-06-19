@@ -2,6 +2,7 @@
     <thead>
     <tr>
         <th>ID</th>
+        <th>Title</th>
         <th>Created At</th>
         <th>Updated At</th>
         <th>Details</th>
@@ -11,19 +12,24 @@
     </thead>
     <tbody>
     <tr th:each="contenttemplate: ${contenttemplates}">
-        <td><a th:href="@{/admin/contenttemplates/}+${contenttemplate?.id}" th:text="${contenttemplate?.id}"></a></td>
+        <td><a th:href="@{/admin/content-templates/}+${contenttemplate?.id}" th:text="${contenttemplate?.id}"></a></td>
+        <td>
+            <a th:href="@{/admin/content-templates/}+${contenttemplate?.id}">
+                <span th:text="${contenttemplate?.title}"></span>
+            </a>
+        </td>
         <td th:text="${contenttemplate?.createdAt}"></td>
         <td th:text="${contenttemplate?.updatedAt}"></td>
         <td>
             <a class="btn btn-primary"
-               th:href="@{/admin/contenttemplates/}+${contenttemplate?.id}">Details</a>
+               th:href="@{/admin/content-templates/}+${contenttemplate?.id}">Details</a>
         </td>
         <td>
             <a class="btn btn-warning"
-               th:href="@{/admin/contenttemplates/}+${contenttemplate?.id}+@{/update}">Update</a>
+               th:href="@{/admin/content-templates/}+${contenttemplate?.id}+@{/update}">Update</a>
         </td>
         <td>
-            <form method="post" th:action="@{/admin/contenttemplates/}+${contenttemplate?.id}+@{/delete}"
+            <form method="post" th:action="@{/admin/content-templates/}+${contenttemplate?.id}+@{/delete}"
                   onclick="return confirm('Are you sure?')">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
