@@ -4,6 +4,7 @@ import com.example.cms.domains.contenttemplates.repositories.ContentTemplateRepo
 import com.example.cms.domains.preparedcontents.models.ContentStatuses
 import com.example.cms.domains.preparedcontents.models.dtos.PreparedContentDto
 import com.example.cms.domains.preparedcontents.models.entities.PreparedContent
+import com.example.common.misc.Commons
 import com.example.common.utils.ExceptionUtil
 import com.example.coreweb.domains.base.models.mappers.BaseMapper
 import org.springframework.beans.factory.annotation.Autowired
@@ -54,18 +55,10 @@ class PreparedContentMapper @Autowired constructor(
             this.placeholderValues = dto.placeholderValues
             this.template = templateRepository.find(dto.templateId)
                 .orElseThrow { ExceptionUtil.notFound(PreparedContent::class.java, dto.templateId) }
-            this.resolvedContent = parseContent(dto.placeholderValues, this.template.content)
+            this.resolvedContent = Commons.replacePlaceholders(this.template.content, dto.placeholderValues)
         }
 
         return entity
     }
 
-    private fun parseContent(placeholderValues: MutableMap<String, String>, content: String): String {
-        var text: String = content
-        for (ph in placeholderValues.entries) {
-            // replace placeholders with capture groups
-            text = text.replace("[" + ph.key + "]", ph.value)
-        }
-        return text
-    }
 }

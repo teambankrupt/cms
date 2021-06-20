@@ -22,6 +22,7 @@ import org.springframework.core.io.Resource
 import org.springframework.data.domain.Sort
 import org.springframework.ui.Model
 import java.util.*
+import javax.servlet.http.HttpServletResponse
 
 @RestController
 @Api(tags = ["Prepared Contents"], description = "Description about PreparedContents")
@@ -80,16 +81,16 @@ class PreparedContentController @Autowired constructor(
     @GetMapping(Route.V1.PREPAREDCONTENT_CONTENT_HTML)
     fun resolvedHtml(
         @PathVariable("id") id: Long,
-        model: Model
-    ): String {
-        val entity = this.preparedContentService.find(id).orElseThrow { ExceptionUtil.notFound("PreparedContent", id) }
-        model.addAttribute("content", entity.resolvedContent)
-        return "preparedcontents/fragments/rawhtml"
+        httpServetResponse: HttpServletResponse
+    ) {
+        val rdrUrl = "${this.baseUrl}${Route.V1.WEB_PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}" +
+                "?access_token=${SecurityContext.getToken()}"
+        httpServetResponse.sendRedirect(rdrUrl)
     }
 
     @GetMapping(Route.V1.PREPAREDCONTENT_CONTENT_PDF)
     fun downloadContentPdf(@PathVariable("id") id: Long): ResponseEntity<Resource> {
-        val url = "${this.baseUrl}${Route.V1.PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}" +
+        val url = "${this.baseUrl}${Route.V1.WEB_PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}" +
                 "?access_token=${SecurityContext.getToken()}"
         val file = ReportUtil.generatePdf(url)
         return ResourceUtil.buildDownloadResponse(file, UUID.randomUUID().toString())
@@ -97,7 +98,7 @@ class PreparedContentController @Autowired constructor(
 
     @GetMapping(Route.V1.PREPAREDCONTENT_CONTENT_IMG)
     fun downloadContentImg(@PathVariable("id") id: Long): ResponseEntity<Resource> {
-        val url = "${this.baseUrl}${Route.V1.PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}" +
+        val url = "${this.baseUrl}${Route.V1.WEB_PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}" +
                 "?access_token=${SecurityContext.getToken()}"
         val file = ReportUtil.generateImage(url)
         return ResourceUtil.buildDownloadResponse(file, UUID.randomUUID().toString())

@@ -7,4 +7,5 @@ import org.springframework.data.domain.Page
 
 interface PreparedContentService : CrudServiceV3<PreparedContent> {
     fun search(templateId: Long?, params: PageableParams): Page<PreparedContent>
+    fun generateHtmlForTemplate(templateId: Long, title: String, placeholderValues: Map<String, String>): String
 }
