@@ -1,5 +1,6 @@
 package com.example.cms.domains.preparedcontents.controllers.web
 
+import com.example.auth.config.security.SecurityContext
 import com.example.cms.domains.contenttemplates.models.entities.ContentTemplate
 import com.example.cms.domains.contenttemplates.services.ContentTemplateService
 import com.example.cms.domains.preparedcontents.models.dtos.PreparedContentDto
@@ -7,6 +8,8 @@ import com.example.cms.domains.preparedcontents.models.mappers.PreparedContentMa
 import com.example.cms.domains.preparedcontents.services.PreparedContentService
 import com.example.cms.routing.Route
 import com.example.common.utils.ExceptionUtil
+import com.example.common.utils.ReportUtil
+import com.example.coreweb.commons.ResourceUtil
 import com.example.coreweb.domains.base.controllers.CrudWebControllerV3
 import com.example.coreweb.domains.base.models.enums.SortByFields
 import com.example.coreweb.utils.PageAttr
@@ -18,6 +21,10 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import javax.validation.Valid
 import com.example.coreweb.utils.PageableParams
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.io.Resource
+import org.springframework.http.ResponseEntity
+import java.util.*
 
 @Controller
 class PreparedContentWebController @Autowired constructor(
@@ -25,6 +32,9 @@ class PreparedContentWebController @Autowired constructor(
     private val preparedContentMapper: PreparedContentMapper,
     private val contentTemplateService: ContentTemplateService
 ) : CrudWebControllerV3<PreparedContentDto> {
+
+    @Value("\${app.base-url-api}")
+    lateinit var baseUrl: String
 
     //    @GetMapping(Route.V1.ADMIN_SEARCH_PREPAREDCONTENTS)
     override fun search(
@@ -146,4 +156,31 @@ class PreparedContentWebController @Autowired constructor(
         return "redirect:${Route.V1.ADMIN_SEARCH_PREPAREDCONTENTS}";
     }
 
+    /*
+    Downloads
+     */
+
+    @GetMapping(Route.V1.WEB_PREPAREDCONTENT_CONTENT_HTML)
+    fun resolvedHtml(
+        @PathVariable("id") id: Long,
+        model: Model
+    ): String {
+        val entity = this.preparedContentService.find(id).orElseThrow { ExceptionUtil.notFound("PreparedContent", id) }
+        model.addAttribute("content", entity.resolvedContent)
+        return "preparedcontents/fragments/rawhtml"
+    }
+
+    @GetMapping(Route.V1.WEB_PREPAREDCONTENT_CONTENT_PDF)
+    fun downloadContentPdf(@PathVariable("id") id: Long): ResponseEntity<Resource> {
+        val url = "${this.baseUrl}${Route.V1.WEB_PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}"
+        val file = ReportUtil.generatePdf(url)
+        return ResourceUtil.buildDownloadResponse(file, UUID.randomUUID().toString() + ".pdf")
+    }
+
+    @GetMapping(Route.V1.WEB_PREPAREDCONTENT_CONTENT_IMG)
+    fun downloadContentImg(@PathVariable("id") id: Long): ResponseEntity<Resource> {
+        val url = "${this.baseUrl}${Route.V1.WEB_PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}"
+        val file = ReportUtil.generateImage(url)
+        return ResourceUtil.buildDownloadResponse(file, UUID.randomUUID().toString() +".png")
+    }
 }

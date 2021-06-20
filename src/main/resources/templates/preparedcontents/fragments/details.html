@@ -26,5 +26,16 @@
 
     </div>
 
+    <div class="card">
+        <div class="header">
+            DOWNLOAD
+        </div>
+        <div class="body">
+            <a class="btn btn-primary" target="_blank" th:href="@{/p/prepared-contents/}+${preparedcontent?.id}+@{/html}">HTML</a>
+            <a class="btn btn-primary" target="_blank" th:href="@{/prepared-contents/}+${preparedcontent?.id}+@{/pdf}">PDF</a>
+            <a class="btn btn-primary" target="_blank" th:href="@{/prepared-contents/}+${preparedcontent?.id}+@{/img}">IMAGE</a>
+        </div>
+    </div>
+
 </div>
 </html>

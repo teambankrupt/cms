@@ -8,8 +8,8 @@ class Route {
             private const val VERSION_V2 = "/v2"
             private const val ADMIN = "/admin"
 
-            const val UPLOAD_IMAGE="$API$VERSION_V2/images"
-            const val UPLOAD_IMAGE_BULK="$API$VERSION_V2/images/bulk"
+            const val UPLOAD_IMAGE = "$API$VERSION_V2/images"
+            const val UPLOAD_IMAGE_BULK = "$API$VERSION_V2/images/bulk"
 
             // ContentTemplates (Admin)
             const val ADMIN_SEARCH_CONTENTTEMPLATES = "$ADMIN/content-templates"
@@ -36,12 +36,20 @@ class Route {
             const val ADMIN_UPDATE_PREPAREDCONTENT = "$ADMIN/prepared-contents/{id}"
             const val ADMIN_DELETE_PREPAREDCONTENT = "$ADMIN/prepared-contents/{id}/delete"
 
+            const val WEB_PREPAREDCONTENT_CONTENT_HTML = "/p/prepared-contents/{id}/html"
+            const val WEB_PREPAREDCONTENT_CONTENT_PDF = "/prepared-contents/{id}/pdf"
+            const val WEB_PREPAREDCONTENT_CONTENT_IMG = "/prepared-contents/{id}/img"
+
             // PreparedContents
             const val SEARCH_PREPAREDCONTENTS = "$API$VERSION/prepared-contents"
             const val CREATE_PREPAREDCONTENT = "$API$VERSION/prepared-contents"
             const val FIND_PREPAREDCONTENT = "$API$VERSION/prepared-contents/{id}"
             const val UPDATE_PREPAREDCONTENT = "$API$VERSION/prepared-contents/{id}"
             const val DELETE_PREPAREDCONTENT = "$API$VERSION/prepared-contents/{id}"
+
+            const val PREPAREDCONTENT_CONTENT_HTML = "$API$VERSION/prepared-contents/{id}/html"
+            const val PREPAREDCONTENT_CONTENT_PDF = "$API$VERSION/prepared-contents/{id}/pdf"
+            const val PREPAREDCONTENT_CONTENT_IMG = "$API$VERSION/prepared-contents/{id}/img"
         }
     }
 }

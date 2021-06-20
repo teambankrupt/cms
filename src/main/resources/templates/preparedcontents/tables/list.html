@@ -3,6 +3,7 @@
         <div class="form-group">
             <label for="template">Select a Template</label>
             <select name="template_id" id="template">
+                <option value="">Select a Template</option>
                 <option th:each="template: ${templates}" th:value="${template?.id}" th:text="${template?.title}"
                         th:selected="${template?.id==templateId}"></option>
             </select>
