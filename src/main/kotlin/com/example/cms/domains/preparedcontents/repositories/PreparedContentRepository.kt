@@ -12,8 +12,13 @@ import java.util.*
 @Repository
 interface PreparedContentRepository : JpaRepository<PreparedContent, Long> {
 
-    @Query("SELECT e FROM PreparedContent e WHERE (:q IS NULL OR LOWER(e.createdBy) LIKE %:q%) AND e.deleted=FALSE")
-    fun search(@Param("q") query: String?, pageable: Pageable): Page<PreparedContent>
+    @Query("SELECT e FROM PreparedContent e WHERE (:q IS NULL OR LOWER(e.title) LIKE %:q%)" +
+            " AND (:templateId IS NULL OR e.template.id=:templateId) AND e.deleted=FALSE")
+    fun search(
+        @Param("q") query: String?,
+        @Param("templateId") templateId: Long?,
+        pageable: Pageable
+    ): Page<PreparedContent>
 
     @Query("SELECT e FROM PreparedContent e WHERE e.id=:id AND e.deleted=FALSE")
     fun find(@Param("id") id: Long): Optional<PreparedContent>

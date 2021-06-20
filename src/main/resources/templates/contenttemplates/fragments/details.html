@@ -4,13 +4,13 @@
     <div class="card">
         <div class="header">
             <h2>
-                ContentTemplate Details <small>Description text here...</small>
+                Template Details <small>Description text here...</small>
             </h2>
             <div class="pull-right">
                 <a th:href="@{/admin/content-templates/create}" class="btn btn-primary">Create New</a>
                 <a th:href="@{/admin/content-templates/}+${contenttemplate?.id}+@{/update}"
                    class="btn btn-primary">Edit</a>
-                <a th:href="@{/admin/content-templates}" class="btn btn-primary">All ContentTemplates</a>
+                <a th:href="@{/admin/content-templates}" class="btn btn-primary">All Templates</a>
             </div>
         </div>
 
@@ -22,10 +22,21 @@
             <p>
                 <span th:utext="${contenttemplate?.content}"></span>
             </p>
-
-            <a th:href="@{/admin/prepared-contents/create?template_id=}+${contenttemplate?.id}" class="btn btn-primary pull-right">Use Template</a>
         </div>
 
+    </div>
+
+    <div class="card">
+        <div class="header">
+            <a th:href="@{/admin/prepared-contents?template_id=}+${contenttemplate?.id}"
+               class="btn btn-primary">View Contents</a>
+            <a th:href="@{/admin/prepared-contents/create?template_id=}+${contenttemplate?.id}"
+               class="btn btn-success pull-right">Use Template</a>
+
+        </div>
+        <div class="body">
+
+        </div>
     </div>
 
 </div>

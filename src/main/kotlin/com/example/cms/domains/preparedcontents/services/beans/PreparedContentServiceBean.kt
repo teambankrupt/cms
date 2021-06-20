@@ -16,8 +16,12 @@ class PreparedContentServiceBean @Autowired constructor(
     private val preparedContentRepository: PreparedContentRepository
 ) : PreparedContentService {
 
+    override fun search(templateId: Long?, params: PageableParams): Page<PreparedContent> {
+        return this.preparedContentRepository.search(params.query, templateId, PageAttr.getPageRequest(params))
+    }
+
     override fun search(params: PageableParams): Page<PreparedContent> {
-        return this.preparedContentRepository.search(params.query, PageAttr.getPageRequest(params))
+        return this.preparedContentRepository.search(params.query, null, PageAttr.getPageRequest(params))
     }
 
     override fun save(entity: PreparedContent): PreparedContent {

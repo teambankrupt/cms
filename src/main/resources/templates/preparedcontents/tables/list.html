@@ -1,3 +1,17 @@
+<div>
+    <form class="form form-inline" method="get">
+        <div class="form-group">
+            <label for="template">Select a Template</label>
+            <select name="template_id" id="template">
+                <option th:each="template: ${templates}" th:value="${template?.id}" th:text="${template?.title}"
+                        th:selected="${template?.id==templateId}"></option>
+            </select>
+            <button type="submit" class="btn btn-success">Filter</button>
+            <a th:href="@{/admin/prepared-contents}" class="btn btn-warning">Clear</a>
+        </div>
+    </form>
+
+</div>
 <table class="table table-hover table-condensed table-striped">
     <thead>
     <tr>
@@ -15,8 +29,10 @@
     <tbody>
     <tr th:each="preparedcontent: ${preparedcontents}">
         <td><a th:href="@{/admin/prepared-contents/}+${preparedcontent?.id}" th:text="${preparedcontent?.id}"></a></td>
-        <td><a th:href="@{/admin/prepared-contents/}+${preparedcontent?.id}" th:text="${preparedcontent?.title}"></a></td>
-        <td><a th:href="@{/admin/content-templates/}+${preparedcontent?.templateId}" th:text="${preparedcontent?.templateTitle}"></a></td>
+        <td><a th:href="@{/admin/prepared-contents/}+${preparedcontent?.id}" th:text="${preparedcontent?.title}"></a>
+        </td>
+        <td><a th:href="@{/admin/content-templates/}+${preparedcontent?.templateId}"
+               th:text="${preparedcontent?.templateTitle}"></a></td>
         <td th:text="${preparedcontent?.status}"></td>
         <td th:text="${preparedcontent?.createdAt}"></td>
         <td th:text="${preparedcontent?.updatedAt}"></td>

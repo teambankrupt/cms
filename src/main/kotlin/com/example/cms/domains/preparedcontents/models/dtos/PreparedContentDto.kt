@@ -22,7 +22,6 @@ class PreparedContentDto : BaseDto() {
     var templateId: Long = 0
 
     @NotNull
-    @NotEmpty
     @JsonProperty("placeholder_values")
     @ApiModelProperty(required = true)
     var placeholderValues: HashMap<String, String> = HashMap()

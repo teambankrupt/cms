@@ -26,7 +26,7 @@ class PreparedContentWebController @Autowired constructor(
     private val contentTemplateService: ContentTemplateService
 ) : CrudWebControllerV3<PreparedContentDto> {
 
-    @GetMapping(Route.V1.ADMIN_SEARCH_PREPAREDCONTENTS)
+    //    @GetMapping(Route.V1.ADMIN_SEARCH_PREPAREDCONTENTS)
     override fun search(
         @RequestParam("q", required = false) query: String?,
         @RequestParam("page", defaultValue = "0") page: Int,
@@ -36,6 +36,29 @@ class PreparedContentWebController @Autowired constructor(
         model: Model
     ): String {
         val entities = this.preparedContentService.search(PageableParams.of(query, page, size, sortBy, direction))
+        model.addAttribute("preparedcontents", entities.map { this.preparedContentMapper.map(it) })
+        return "preparedcontents/fragments/all"
+    }
+
+    @GetMapping(Route.V1.ADMIN_SEARCH_PREPAREDCONTENTS)
+    fun searchContent(
+        @RequestParam("q", required = false) query: String?,
+        @RequestParam("template_id", required = false) templateId: Long?,
+        @RequestParam("page", defaultValue = "0") page: Int,
+        @RequestParam("size", defaultValue = "10") size: Int,
+        @RequestParam("sort_by", defaultValue = "ID") sortBy: SortByFields,
+        @RequestParam("sort_direction", defaultValue = "DESC") direction: Sort.Direction,
+        model: Model
+    ): String {
+        val entities = this.preparedContentService.search(
+            templateId,
+            PageableParams.of(query, page, size, sortBy, direction)
+        )
+        val templates = this.contentTemplateService.search(
+            PageableParams.of(null, 0, 100, SortByFields.ID, Sort.Direction.DESC)
+        )
+        model.addAttribute("templateId", templateId)
+        model.addAttribute("templates", templates)
         model.addAttribute("preparedcontents", entities.map { this.preparedContentMapper.map(it) })
         return "preparedcontents/fragments/all"
     }
@@ -71,7 +94,8 @@ class PreparedContentWebController @Autowired constructor(
                 null, 0, 100, SortByFields.ID, Sort.Direction.DESC
             )
         )
-        val selectedTemplate = this.contentTemplateService.find(templateId).orElseThrow { ExceptionUtil.notFound(ContentTemplate::class.java,templateId) }
+        val selectedTemplate = this.contentTemplateService.find(templateId)
+            .orElseThrow { ExceptionUtil.notFound(ContentTemplate::class.java, templateId) }
         model.addAttribute("templates", templates)
         model.addAttribute("selectedTemplate", selectedTemplate)
         return "preparedcontents/fragments/create"

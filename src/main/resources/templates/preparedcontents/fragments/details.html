@@ -4,10 +4,10 @@
     <div class="card">
         <div class="header">
             <h2>
-                PreparedContent Details <small>Description text here...</small>
+                Content Details <small>Description text here...</small>
             </h2>
             <div class="pull-right">
-<!--                <a th:href="@{/admin/prepared-contents/create}" class="btn btn-primary">Create New</a>-->
+                <a th:href="@{/admin/content-templates/}+${preparedcontent?.templateId}" class="btn btn-primary">Template</a>
                 <a th:href="@{/admin/prepared-contents/}+${preparedcontent?.id}+@{/update}" class="btn btn-primary">Edit</a>
                 <a th:href="@{/admin/prepared-contents}" class="btn btn-primary">All Contents</a>
             </div>
