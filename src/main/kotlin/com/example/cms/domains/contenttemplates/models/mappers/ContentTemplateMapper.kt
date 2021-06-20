@@ -20,6 +20,7 @@ class ContentTemplateMapper : BaseMapper<ContentTemplate, ContentTemplateDto> {
             this.createdAt = entity.createdAt
             this.updatedAt = entity.updatedAt
 
+            this.type = entity.type
             this.title = entity.title
             this.content = entity.content
             this.placeholders = entity.placeholders
@@ -32,6 +33,7 @@ class ContentTemplateMapper : BaseMapper<ContentTemplate, ContentTemplateDto> {
         val entity = exEntity ?: ContentTemplate()
 
         entity.apply {
+            this.type = dto.type
             this.title = dto.title
             this.content = dto.content
             this.placeholders = Commons.matchPlaceholders(this.content)

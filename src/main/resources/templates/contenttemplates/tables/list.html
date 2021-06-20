@@ -2,6 +2,7 @@
     <thead>
     <tr>
         <th>ID</th>
+        <th>Type</th>
         <th>Title</th>
         <th>Created At</th>
         <th>Updated At</th>
@@ -13,6 +14,7 @@
     <tbody>
     <tr th:each="contenttemplate: ${contenttemplates}">
         <td><a th:href="@{/admin/content-templates/}+${contenttemplate?.id}" th:text="${contenttemplate?.id}"></a></td>
+        <td th:text="${contenttemplate?.type}"></td>
         <td>
             <a th:href="@{/admin/content-templates/}+${contenttemplate?.id}">
                 <span th:text="${contenttemplate?.title}"></span>

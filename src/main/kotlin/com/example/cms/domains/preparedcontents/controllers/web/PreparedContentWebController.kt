@@ -174,13 +174,13 @@ class PreparedContentWebController @Autowired constructor(
     fun downloadContentPdf(@PathVariable("id") id: Long): ResponseEntity<Resource> {
         val url = "${this.baseUrl}${Route.V1.WEB_PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}"
         val file = ReportUtil.generatePdf(url)
-        return ResourceUtil.buildDownloadResponse(file, UUID.randomUUID().toString() + ".pdf")
+        return ResourceUtil.buildDownloadResponse(file, UUID.randomUUID().toString())
     }
 
     @GetMapping(Route.V1.WEB_PREPAREDCONTENT_CONTENT_IMG)
     fun downloadContentImg(@PathVariable("id") id: Long): ResponseEntity<Resource> {
         val url = "${this.baseUrl}${Route.V1.WEB_PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}"
         val file = ReportUtil.generateImage(url)
-        return ResourceUtil.buildDownloadResponse(file, UUID.randomUUID().toString() +".png")
+        return ResourceUtil.buildDownloadResponse(file, UUID.randomUUID().toString())
     }
 }

@@ -92,7 +92,7 @@ class PreparedContentController @Autowired constructor(
         val url = "${this.baseUrl}${Route.V1.PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}" +
                 "?access_token=${SecurityContext.getToken()}"
         val file = ReportUtil.generatePdf(url)
-        return ResourceUtil.buildDownloadResponse(file, UUID.randomUUID().toString() + ".pdf")
+        return ResourceUtil.buildDownloadResponse(file, UUID.randomUUID().toString())
     }
 
     @GetMapping(Route.V1.PREPAREDCONTENT_CONTENT_IMG)
@@ -100,6 +100,6 @@ class PreparedContentController @Autowired constructor(
         val url = "${this.baseUrl}${Route.V1.PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}" +
                 "?access_token=${SecurityContext.getToken()}"
         val file = ReportUtil.generateImage(url)
-        return ResourceUtil.buildDownloadResponse(file, UUID.randomUUID().toString() + ".png")
+        return ResourceUtil.buildDownloadResponse(file, UUID.randomUUID().toString())
     }
 }
