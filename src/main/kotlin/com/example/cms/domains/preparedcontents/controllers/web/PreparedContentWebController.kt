@@ -1,10 +1,10 @@
 package com.example.cms.domains.preparedcontents.controllers.web
 
-import com.example.auth.config.security.SecurityContext
 import com.example.cms.domains.contenttemplates.models.entities.ContentTemplate
 import com.example.cms.domains.contenttemplates.services.ContentTemplateService
 import com.example.cms.domains.preparedcontents.models.ContentStatuses
 import com.example.cms.domains.preparedcontents.models.dtos.PreparedContentDto
+import com.example.cms.domains.preparedcontents.models.dtos.ReportMailDto
 import com.example.cms.domains.preparedcontents.models.mappers.PreparedContentMapper
 import com.example.cms.domains.preparedcontents.services.PreparedContentService
 import com.example.cms.routing.Route
@@ -13,25 +13,26 @@ import com.example.common.utils.ReportUtil
 import com.example.coreweb.commons.ResourceUtil
 import com.example.coreweb.domains.base.controllers.CrudWebControllerV3
 import com.example.coreweb.domains.base.models.enums.SortByFields
-import com.example.coreweb.utils.PageAttr
-import org.springframework.data.domain.Sort
+import com.example.coreweb.domains.mail.services.MailService
+import com.example.coreweb.utils.PageableParams
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.io.Resource
+import org.springframework.data.domain.Sort
+import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
-import javax.validation.Valid
-import com.example.coreweb.utils.PageableParams
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.core.io.Resource
-import org.springframework.http.ResponseEntity
 import java.util.*
+import javax.validation.Valid
 
 @Controller
 class PreparedContentWebController @Autowired constructor(
     private val preparedContentService: PreparedContentService,
     private val preparedContentMapper: PreparedContentMapper,
-    private val contentTemplateService: ContentTemplateService
+    private val contentTemplateService: ContentTemplateService,
+    private val mailService: MailService
 ) : CrudWebControllerV3<PreparedContentDto> {
 
     @Value("\${app.base-url-api}")
@@ -194,5 +195,18 @@ class PreparedContentWebController @Autowired constructor(
         val url = "${this.baseUrl}${Route.V1.WEB_PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}"
         val file = ReportUtil.generateImage(url)
         return ResourceUtil.buildDownloadResponse(file, UUID.randomUUID().toString())
+    }
+
+    @PostMapping(Route.V1.WEB_PREPAREDCONTENT_CONTENT_SEND_MAIL)
+    fun sendEmail(
+        @PathVariable("id") id: Long,
+        @Valid @ModelAttribute mailDto: ReportMailDto,
+        redirectAttributes: RedirectAttributes
+    ): String {
+        val url = "${this.baseUrl}${Route.V1.WEB_PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}"
+        val file = ReportUtil.generatePdf(url)
+        this.mailService.send(mailDto.to, mailDto.subject, mailDto.body, false, listOf(file))
+        redirectAttributes.addFlashAttribute("message", "Successfully sent to: ${mailDto.to.joinToString(",")}")
+        return "redirect:${Route.V1.ADMIN_FIND_PREPAREDCONTENT.replace("{id}", id.toString())}"
     }
 }

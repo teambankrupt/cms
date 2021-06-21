@@ -40,6 +40,7 @@ class Route {
             const val WEB_PREPAREDCONTENT_CONTENT_HTML = "/p/prepared-contents/{id}/html"
             const val WEB_PREPAREDCONTENT_CONTENT_PDF = "/prepared-contents/{id}/pdf"
             const val WEB_PREPAREDCONTENT_CONTENT_IMG = "/prepared-contents/{id}/img"
+            const val WEB_PREPAREDCONTENT_CONTENT_SEND_MAIL = "/prepared-contents/{id}/send-email"
 
             // PreparedContents
             const val SEARCH_PREPAREDCONTENTS = "$API$VERSION/prepared-contents"
