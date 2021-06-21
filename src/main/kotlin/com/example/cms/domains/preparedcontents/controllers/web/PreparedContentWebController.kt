@@ -5,6 +5,8 @@ import com.example.cms.domains.contenttemplates.services.ContentTemplateService
 import com.example.cms.domains.preparedcontents.models.ContentStatuses
 import com.example.cms.domains.preparedcontents.models.dtos.PreparedContentDto
 import com.example.cms.domains.preparedcontents.models.dtos.ReportMailDto
+import com.example.cms.domains.preparedcontents.models.entities.PreparedContent
+import com.example.cms.domains.preparedcontents.models.enums.ReportTypes
 import com.example.cms.domains.preparedcontents.models.mappers.PreparedContentMapper
 import com.example.cms.domains.preparedcontents.services.PreparedContentService
 import com.example.cms.routing.Route
@@ -81,6 +83,8 @@ class PreparedContentWebController @Autowired constructor(
         model: Model
     ): String {
         val entity = this.preparedContentService.find(id).orElseThrow { ExceptionUtil.notFound("PreparedContent", id) }
+
+        model.addAttribute("reportTypes", ReportTypes.values())
         model.addAttribute("preparedcontent", this.preparedContentMapper.map(entity))
         return "preparedcontents/fragments/details"
     }
@@ -203,9 +207,16 @@ class PreparedContentWebController @Autowired constructor(
         @Valid @ModelAttribute mailDto: ReportMailDto,
         redirectAttributes: RedirectAttributes
     ): String {
-        val url = "${this.baseUrl}${Route.V1.WEB_PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}"
-        val file = ReportUtil.generatePdf(url)
-        this.mailService.send(mailDto.to, mailDto.subject, mailDto.body, false, listOf(file))
+        if (mailDto.reportType == ReportTypes.HTML) {
+            val content = this.preparedContentService.find(id)
+                .orElseThrow { ExceptionUtil.notFound(PreparedContent::class.java, id) }
+            this.mailService.send(mailDto.to, mailDto.subject, content.resolvedContent, true)
+        } else {
+            val url = "${this.baseUrl}${Route.V1.WEB_PREPAREDCONTENT_CONTENT_HTML.replace("{id}", id.toString())}"
+            val file =
+                if (mailDto.reportType == ReportTypes.PDF) ReportUtil.generatePdf(url) else ReportUtil.generateImage(url)
+            this.mailService.send(mailDto.to, mailDto.subject, mailDto.body, false, listOf(file))
+        }
         redirectAttributes.addFlashAttribute("message", "Successfully sent to: ${mailDto.to.joinToString(",")}")
         return "redirect:${Route.V1.ADMIN_FIND_PREPAREDCONTENT.replace("{id}", id.toString())}"
     }
