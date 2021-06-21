@@ -1,14 +1,21 @@
 <html layout:decorate="dashboard" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <div layout:fragment="main_content">
-
+    <div th:if="${message!=null}" class="alert alert-info" role="alert">
+        <span th:text="${message}"></span>
+    </div>
     <div class="card">
         <div class="header">
             <h2>
                 Content Details <small>Description text here...</small>
             </h2>
             <div class="pull-right">
+                <a th:href="@{/admin/prepared-contents/}+${preparedcontent?.id}+@{/update}"
+                   class="btn btn-info">Edit</a>
+                <a th:if="${preparedcontent?.isFinalized()}" th:href="@{/admin/prepared-contents/}+${preparedcontent?.id}+@{/change-status?status=DRAFT}"
+                   class="btn btn-warning">MAKE DRAFT</a>
+                <a th:if="${!preparedcontent?.isFinalized()}" th:href="@{/admin/prepared-contents/}+${preparedcontent?.id}+@{/change-status?status=FINALIZED}"
+                   class="btn btn-success">FINALIZE CONTENT</a>
                 <a th:href="@{/admin/content-templates/}+${preparedcontent?.templateId}" class="btn btn-primary">Template</a>
-                <a th:href="@{/admin/prepared-contents/}+${preparedcontent?.id}+@{/update}" class="btn btn-primary">Edit</a>
                 <a th:href="@{/admin/prepared-contents}" class="btn btn-primary">All Contents</a>
             </div>
         </div>
@@ -28,10 +35,14 @@
 
     <div class="card">
         <div class="header">
-            DOWNLOAD
+            <b>DOWNLOAD</b>
         </div>
-        <div class="body">
-            <a class="btn btn-primary" target="_blank" th:href="@{/p/prepared-contents/}+${preparedcontent?.id}+@{/html}">HTML</a>
+        <div class="body" th:if="${!preparedcontent?.isFinalized()}">
+            <span class="text text-warning">Please finalize the content before you can download the report or send email.</span>
+        </div>
+        <div class="body"  th:if="${preparedcontent?.isFinalized()}">
+            <a class="btn btn-primary" target="_blank"
+               th:href="@{/p/prepared-contents/}+${preparedcontent?.id}+@{/html}">HTML</a>
             <a class="btn btn-primary" target="_blank" th:href="@{/prepared-contents/}+${preparedcontent?.id}+@{/pdf}">PDF</a>
             <a class="btn btn-primary" target="_blank" th:href="@{/prepared-contents/}+${preparedcontent?.id}+@{/img}">IMAGE</a>
         </div>

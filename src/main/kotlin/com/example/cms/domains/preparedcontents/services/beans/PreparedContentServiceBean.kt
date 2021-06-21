@@ -53,6 +53,13 @@ class PreparedContentServiceBean @Autowired constructor(
                 "?access_token=${SecurityContext.getToken()}"
     }
 
+    override fun changeStatus(contentId: Long, status: ContentStatuses): PreparedContent {
+        val content =
+            this.find(contentId).orElseThrow { ExceptionUtil.notFound(PreparedContent::class.java, contentId) }
+        content.status = status
+        return this.save(content)
+    }
+
     override fun save(entity: PreparedContent): PreparedContent {
         this.validate(entity)
         return this.preparedContentRepository.save(entity)

@@ -35,6 +35,7 @@ class Route {
             const val ADMIN_UPDATE_PREPAREDCONTENT_PAGE = "$ADMIN/prepared-contents/{id}/update"
             const val ADMIN_UPDATE_PREPAREDCONTENT = "$ADMIN/prepared-contents/{id}"
             const val ADMIN_DELETE_PREPAREDCONTENT = "$ADMIN/prepared-contents/{id}/delete"
+            const val ADMIN_PREPAREDCONTENT_CHANGE_STATUS = "$ADMIN/prepared-contents/{id}/change-status"
 
             const val WEB_PREPAREDCONTENT_CONTENT_HTML = "/p/prepared-contents/{id}/html"
             const val WEB_PREPAREDCONTENT_CONTENT_PDF = "/prepared-contents/{id}/pdf"

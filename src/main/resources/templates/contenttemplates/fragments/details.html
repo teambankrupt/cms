@@ -1,6 +1,9 @@
 <html layout:decorate="dashboard" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <div layout:fragment="main_content">
 
+    <div class="alert alert-info" th:if="${message!=null}">
+        <span th:text="${message}"></span>
+    </div>
     <div class="card">
         <div class="header">
             <h2>

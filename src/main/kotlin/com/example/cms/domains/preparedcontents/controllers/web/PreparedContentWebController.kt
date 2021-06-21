@@ -3,6 +3,7 @@ package com.example.cms.domains.preparedcontents.controllers.web
 import com.example.auth.config.security.SecurityContext
 import com.example.cms.domains.contenttemplates.models.entities.ContentTemplate
 import com.example.cms.domains.contenttemplates.services.ContentTemplateService
+import com.example.cms.domains.preparedcontents.models.ContentStatuses
 import com.example.cms.domains.preparedcontents.models.dtos.PreparedContentDto
 import com.example.cms.domains.preparedcontents.models.mappers.PreparedContentMapper
 import com.example.cms.domains.preparedcontents.services.PreparedContentService
@@ -154,6 +155,17 @@ class PreparedContentWebController @Autowired constructor(
         this.preparedContentService.delete(id, true)
         redirectAttributes.addFlashAttribute("message", "Deleted!!")
         return "redirect:${Route.V1.ADMIN_SEARCH_PREPAREDCONTENTS}";
+    }
+
+    @GetMapping(Route.V1.ADMIN_PREPAREDCONTENT_CHANGE_STATUS)
+    fun changeStatus(
+        @PathVariable("id") id: Long,
+        @RequestParam("status") status: ContentStatuses,
+        redirectAttributes: RedirectAttributes
+    ): String {
+        val content = this.preparedContentService.changeStatus(id, status)
+        redirectAttributes.addFlashAttribute("message", "Successfully changed status to: $status")
+        return "redirect:${Route.V1.ADMIN_FIND_PREPAREDCONTENT.replace("{id}", content.id.toString())}"
     }
 
     /*

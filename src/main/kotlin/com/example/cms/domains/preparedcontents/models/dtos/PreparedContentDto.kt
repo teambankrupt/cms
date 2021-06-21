@@ -41,4 +41,7 @@ class PreparedContentDto : BaseDto() {
     @JsonProperty("template_title")
     var templateTitle: String? = null
 
+    fun isFinalized(): Boolean {
+        return this.status == ContentStatuses.FINALIZED
+    }
 }
