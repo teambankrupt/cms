@@ -12,8 +12,8 @@ import java.util.*
 @Repository
 interface SiteContentRepository : JpaRepository<SiteContent, Long> {
 
-    @Query("SELECT e FROM SiteContent e WHERE (:q IS NULL OR LOWER(e.createdBy) LIKE %:q%) AND e.deleted=FALSE")
-    fun search(@Param("q") query: String?, pageable: Pageable): Page<SiteContent>
+    @Query("SELECT e FROM SiteContent e WHERE (:siteId IS NULL OR e.site.id=:siteId) AND (:q IS NULL OR LOWER(e.createdBy) LIKE %:q%) AND e.deleted=FALSE")
+    fun search(@Param("siteId") siteId: Long?,@Param("q") query: String?, pageable: Pageable): Page<SiteContent>
 
     @Query("SELECT e FROM SiteContent e WHERE e.id=:id AND e.deleted=FALSE")
     fun find(@Param("id") id: Long): Optional<SiteContent>

@@ -55,20 +55,20 @@ class Route {
 
 
             // SitePages (Web)
-            const val WEB_SEARCH_SITEPAGES = "/sitepages"
-            const val WEB_CREATE_SITEPAGE_PAGE = "/sitepages/create"
-            const val WEB_CREATE_SITEPAGE = "/sitepages"
-            const val WEB_FIND_SITEPAGE = "/sitepages/{id}"
-            const val WEB_UPDATE_SITEPAGE_PAGE = "/sitepages/{id}/update"
-            const val WEB_UPDATE_SITEPAGE = "/sitepages/{id}"
-            const val WEB_DELETE_SITEPAGE = "/sitepages/{id}/delete"
+            const val WEB_SEARCH_SITEPAGES = "/site-pages"
+            const val WEB_CREATE_SITEPAGE_PAGE = "/site-pages/create"
+            const val WEB_CREATE_SITEPAGE = "/site-pages"
+            const val WEB_FIND_SITEPAGE = "/site-pages/{id}"
+            const val WEB_UPDATE_SITEPAGE_PAGE = "/site-pages/{id}/update"
+            const val WEB_UPDATE_SITEPAGE = "/site-pages/{id}"
+            const val WEB_DELETE_SITEPAGE = "/site-pages/{id}/delete"
 
             // SitePages
-            const val SEARCH_SITEPAGES = "$API$VERSION/sitepages"
-            const val CREATE_SITEPAGE = "$API$VERSION/sitepages"
-            const val FIND_SITEPAGE = "$API$VERSION/sitepages/{id}"
-            const val UPDATE_SITEPAGE = "$API$VERSION/sitepages/{id}"
-            const val DELETE_SITEPAGE = "$API$VERSION/sitepages/{id}"
+            const val SEARCH_SITEPAGES = "$API$VERSION/site-pages"
+            const val CREATE_SITEPAGE = "$API$VERSION/site-pages"
+            const val FIND_SITEPAGE = "$API$VERSION/site-pages/{id}"
+            const val UPDATE_SITEPAGE = "$API$VERSION/site-pages/{id}"
+            const val DELETE_SITEPAGE = "$API$VERSION/site-pages/{id}"
 
             // Sites (Web)
             const val WEB_SEARCH_SITES = "/sites"
@@ -87,20 +87,20 @@ class Route {
             const val DELETE_SITE = "$API$VERSION/sites/{id}"
 
             // SiteContents
-            const val SEARCH_SITECONTENTS = "$API$VERSION/sitecontents"
-            const val CREATE_SITECONTENT = "$API$VERSION/sitecontents"
-            const val FIND_SITECONTENT = "$API$VERSION/sitecontents/{id}"
-            const val UPDATE_SITECONTENT = "$API$VERSION/sitecontents/{id}"
-            const val DELETE_SITECONTENT = "$API$VERSION/sitecontents/{id}"
+            const val SEARCH_SITECONTENTS = "$API$VERSION/site-contents"
+            const val CREATE_SITECONTENT = "$API$VERSION/site-contents"
+            const val FIND_SITECONTENT = "$API$VERSION/site-contents/{id}"
+            const val UPDATE_SITECONTENT = "$API$VERSION/site-contents/{id}"
+            const val DELETE_SITECONTENT = "$API$VERSION/site-contents/{id}"
 
             // SiteContents (Web)
-            const val WEB_SEARCH_SITECONTENTS = "/sitecontents"
-            const val WEB_CREATE_SITECONTENT_PAGE = "/sitecontents/create"
-            const val WEB_CREATE_SITECONTENT = "/sitecontents"
-            const val WEB_FIND_SITECONTENT = "/sitecontents/{id}"
-            const val WEB_UPDATE_SITECONTENT_PAGE = "/sitecontents/{id}/update"
-            const val WEB_UPDATE_SITECONTENT = "/sitecontents/{id}"
-            const val WEB_DELETE_SITECONTENT = "/sitecontents/{id}/delete"
+            const val WEB_SEARCH_SITECONTENTS = "/site-contents"
+            const val WEB_CREATE_SITECONTENT_PAGE = "/site-contents/create"
+            const val WEB_CREATE_SITECONTENT = "/site-contents"
+            const val WEB_FIND_SITECONTENT = "/site-contents/{id}"
+            const val WEB_UPDATE_SITECONTENT_PAGE = "/site-contents/{id}/update"
+            const val WEB_UPDATE_SITECONTENT = "/site-contents/{id}"
+            const val WEB_DELETE_SITECONTENT = "/site-contents/{id}/delete"
         }
     }
 }

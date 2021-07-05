@@ -3,7 +3,6 @@ package com.example.cms.domains.sites.models.dtos
 import com.example.coreweb.domains.base.models.dtos.BaseDto
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.annotations.ApiModelProperty
-import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
 
 class SiteDto : BaseDto() {
@@ -30,8 +29,24 @@ class SiteDto : BaseDto() {
     @JsonProperty("content_page_id")
     var contentPageId: Long? = null
 
-    @ApiModelProperty(required = true)
-    @Min(1)
+    /*
+    READONLY
+     */
+    @ApiModelProperty(readOnly = true)
     @JsonProperty("owner_id")
-    var ownerId: Long = 0
+    var ownerId: Long? = null
+
+    @ApiModelProperty(readOnly = true)
+    @JsonProperty("owner_name")
+    var ownerName: String? = null
+
+    @ApiModelProperty(readOnly = true)
+    @JsonProperty("home_page_title")
+    var homePageTitle: String? = null
+
+    @ApiModelProperty(readOnly = true)
+    @JsonProperty("content_page_title")
+    var contentPageTitle: String? = null
+
+
 }

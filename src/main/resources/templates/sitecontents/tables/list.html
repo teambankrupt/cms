@@ -11,19 +11,19 @@
     </thead>
     <tbody>
     <tr th:each="sitecontent: ${sitecontents}">
-        <td><a th:href="@{/sitecontents/}+${sitecontent?.id}" th:text="${sitecontent?.id}"></a></td>
+        <td><a th:href="@{/site-contents/}+${sitecontent?.id}" th:text="${sitecontent?.id}"></a></td>
         <td th:text="${sitecontent?.createdAt}"></td>
         <td th:text="${sitecontent?.updatedAt}"></td>
         <td>
             <a class="btn btn-primary"
-               th:href="@{/sitecontents/}+${sitecontent?.id}">Details</a>
+               th:href="@{/site-contents/}+${sitecontent?.id}">Details</a>
         </td>
         <td>
             <a class="btn btn-warning"
-               th:href="@{/sitecontents/}+${sitecontent?.id}+@{/update}">Update</a>
+               th:href="@{/site-contents/}+${sitecontent?.id}+@{/update}">Update</a>
         </td>
         <td>
-            <form method="post" th:action="@{/sitecontents/}+${sitecontent?.id}+@{/delete}"
+            <form method="post" th:action="@{/site-contents/}+${sitecontent?.id}+@{/delete}"
                   onclick="return confirm('Are you sure?')">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>

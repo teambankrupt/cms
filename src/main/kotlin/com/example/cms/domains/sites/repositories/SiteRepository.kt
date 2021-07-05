@@ -12,10 +12,15 @@ import java.util.*
 @Repository
 interface SiteRepository : JpaRepository<Site, Long> {
 
-    @Query("SELECT e FROM Site e WHERE (:q IS NULL OR LOWER(e.createdBy) LIKE %:q%) AND e.deleted=FALSE")
-    fun search(@Param("q") query: String?, pageable: Pageable): Page<Site>
+    @Query("SELECT e FROM Site e WHERE (:ownerId IS NULL OR e.owner.id=:ownerId) AND (:q IS NULL OR LOWER(e.title) LIKE %:q%) AND e.deleted=FALSE")
+    fun search(@Param("ownerId") ownerId: Long?, @Param("q") query: String?, pageable: Pageable): Page<Site>
 
     @Query("SELECT e FROM Site e WHERE e.id=:id AND e.deleted=FALSE")
     fun find(@Param("id") id: Long): Optional<Site>
 
+    @Query("SELECT e FROM Site e WHERE e.domain=:domain AND e.deleted=FALSE")
+    fun findByDomain(@Param("domain") domain: String): Optional<Site>
+
+    @Query("SELECT e FROM Site e WHERE e.domain=:domain")
+    fun findByDomainIncludingDeleted(@Param("domain") domain: String): Optional<Site>
 }

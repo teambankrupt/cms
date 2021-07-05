@@ -1,4 +1,4 @@
-<form class="form" method="post" th:action="@{/sitecontents/}+${sitecontent!=null?sitecontent?.id:''}">
+<form class="form" method="post" th:action="@{/site-contents/}+${sitecontent!=null?sitecontent?.id:''}">
 
     <div class="form-group">
         <label for="name">Name</label>
@@ -6,7 +6,7 @@
     </div>
 
     <div class="form-group">
-        <a th:href="@{/sitecontents}" class="btn btn-warning">Cancel</a>
+        <a th:href="@{/site-contents}" class="btn btn-warning">Cancel</a>
         <button type="submit" class="btn btn-success">Submit</button>
     </div>
 

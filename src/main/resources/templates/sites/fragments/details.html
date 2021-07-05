@@ -6,7 +6,8 @@
     <div class="card">
         <div class="header">
             <h2>
-                Site Details <small>Description text here...</small>
+                <span th:text="${site?.title}"></span>
+                <small th:text="${site?.tagline}">Description text here...</small>
             </h2>
             <div class="pull-right">
                 <a th:href="@{/sites/create}" class="btn btn-primary">Create New</a>
@@ -16,9 +17,120 @@
         </div>
 
         <div class="body">
-            Sites(<span th:text="${site?.id}"></span>) details goes here
+            <h3>About this site</h3>
+            <p th:text="${site?.description}">No Information provided.</p>
         </div>
 
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            <div class="card">
+                <div class="body">
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#pages" aria-controls="pages" role="tab"
+                                                                      data-toggle="tab">Pages</a></li>
+                            <li role="presentation"><a href="#posts" aria-controls="posts" role="tab"
+                                                                      data-toggle="tab">Posts</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="pages">
+                                <a class="btn btn-primary pull-right" th:href="@{/site-pages/create?site_id=}+${site?.id}">Create
+                                    New</a>
+                                <div class="panel panel-default panel-post" th:each="page: ${pages}">
+                                    <div class="panel-heading">
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <a href="#">
+                                                    <img src="../../images/user-lg.jpg"/>
+                                                </a>
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 class="media-heading">
+                                                    <a href="#" th:text="${site?.ownerName}"></a>
+                                                </h4>
+                                                Created on - <small th:text="${page?.getCreatedAtReadable()}"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="post">
+                                            <div class="post-heading">
+                                                <p th:utext="${page?.content}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <ul>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="material-icons">comment</i>
+                                                    <span>5 Comments</span>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a class="btn btn-primary" th:href="@{/site-pages/}+${page?.id}">
+                                                    <!--                                                    <i class="material-icons">thumb_up</i>-->
+                                                    <span style="color: white;">See More</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade in" id="posts">
+                                <a class="btn btn-primary pull-right" th:href="@{/site-contents/create?site_id=}+${site?.id}">Create
+                                    New</a>
+                                <div class="panel panel-default panel-post" th:each="content: ${contents}">
+                                    <div class="panel-heading">
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <a href="#">
+                                                    <img src="../../images/user-lg.jpg"/>
+                                                </a>
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 class="media-heading">
+                                                    <a href="#" th:text="${site?.ownerName}"></a>
+                                                </h4>
+                                                Created on - <small th:text="${content?.getCreatedAtReadable()}"></small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="post">
+                                            <div class="post-heading">
+                                                <p th:utext="${content?.content}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <ul>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="material-icons">comment</i>
+                                                    <span>5 Comments</span>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a class="btn btn-primary" th:href="@{/site-contents/}+${content?.id}">
+                                                    <!--                                                    <i class="material-icons">thumb_up</i>-->
+                                                    <span style="color: white;">See More</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>

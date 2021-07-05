@@ -5,6 +5,7 @@ import com.example.cms.domains.sitecontents.models.entities.SiteContent
 import com.example.cms.domains.sites.models.entities.Site
 import com.example.cms.domains.sites.repositories.SiteRepository
 import com.example.common.utils.ExceptionUtil
+import com.example.common.utils.TextUtility
 import com.example.coreweb.domains.base.models.mappers.BaseMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -39,8 +40,10 @@ class SiteContentMapper @Autowired constructor(
 
         entity.apply {
             this.title = dto.title
-            this.slug = if (!dto.slug.isNullOrBlank()) dto.slug!! else
-                dto.title.trim().lowercase().replace(" ", "-")
+            this.slug = TextUtility.removeSpecialCharacters(
+                if (!dto.slug.isNullOrBlank()) dto.slug!! else
+                    dto.title.trim().lowercase().replace(" ", "-")
+            )
             this.content = dto.content
             this.published = dto.published
             this.publishedOn = if (dto.published) dto.publishedOn ?: Instant.now() else null

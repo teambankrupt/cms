@@ -2,11 +2,19 @@ package com.example.cms.domains.sitepages.models.mappers
 
 import com.example.cms.domains.sitepages.models.dtos.SitePageDto
 import com.example.cms.domains.sitepages.models.entities.SitePage
+import com.example.cms.domains.sites.models.entities.Site
+import com.example.cms.domains.sites.repositories.SiteRepository
+import com.example.common.misc.Commons
+import com.example.common.utils.ExceptionUtil
+import com.example.common.utils.TextUtility
 import com.example.coreweb.domains.base.models.mappers.BaseMapper
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class SitePageMapper : BaseMapper<SitePage, SitePageDto> {
+class SitePageMapper @Autowired constructor(
+    private val siteRepository: SiteRepository
+) : BaseMapper<SitePage, SitePageDto> {
 
     override fun map(entity: SitePage): SitePageDto {
         val dto = SitePageDto()
@@ -19,6 +27,10 @@ class SitePageMapper : BaseMapper<SitePage, SitePageDto> {
             this.title = entity.title
             this.slug = entity.slug
             this.description = entity.description
+
+            this.content = entity.content
+
+            this.summary = Commons.summary(entity.content,200)
         }
 
         return dto
@@ -29,9 +41,14 @@ class SitePageMapper : BaseMapper<SitePage, SitePageDto> {
 
         entity.apply {
             this.title = dto.title
-            this.slug = if (!dto.slug.isNullOrBlank()) dto.slug!! else
-                dto.title.trim().lowercase().replace(" ", "-")
+            this.slug = TextUtility.removeSpecialCharacters(
+                if (!dto.slug.isNullOrBlank()) dto.slug!! else
+                    dto.title.trim().lowercase().replace(" ", "-")
+            )
             this.description = dto.description
+            this.content = dto.content
+            this.site = siteRepository.find(dto.siteId)
+                .orElseThrow { ExceptionUtil.notFound(Site::class.java, dto.siteId) }
         }
 
         return entity

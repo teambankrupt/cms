@@ -1,6 +1,5 @@
 package com.example.cms.domains.sitepages.models.entities
 
-import com.example.cms.domains.sitecontents.models.entities.SiteContent
 import com.example.cms.domains.sites.models.entities.Site
 import com.example.coreweb.domains.base.entities.BaseEntity
 import javax.persistence.*
@@ -18,9 +17,8 @@ class SitePage : BaseEntity() {
     @Column(name = "description")
     var description: String? = null
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "content_id", nullable = false)
-    lateinit var content: SiteContent
+    @JoinColumn(name = "content", nullable = false)
+    lateinit var content: String
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "site_id", nullable = false)

@@ -1,8 +1,45 @@
 <form class="form" method="post" th:action="@{/sites/}+${site!=null?site?.id:''}">
 
     <div class="form-group">
-        <label for="name">Name</label>
-        <input class="form-control form-line" type="text" name="name" id="name" placeholder="Name">
+        <label for="title">Title</label>
+        <input class="form-control form-line" type="text" name="title" id="title" placeholder="Title" required
+               minlength="3" th:value="${site?.title}">
+    </div>
+
+    <div class="form-group">
+        <label for="domain">Domain</label>
+        <input class="form-control form-line" type="text" name="domain" id="domain" placeholder="Domain" minlength="3"
+               th:value="${site?.domain}">
+    </div>
+
+    <div class="form-group">
+        <label for="tagline">Tagline</label>
+        <input class="form-control form-line" type="text" name="tagline" id="tagline" placeholder="Tagline"
+               minlength="3" th:value="${site?.tagline}">
+    </div>
+
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control form-line" type="text" name="description" id="description"
+                  placeholder="Description" th:text="${site?.description}"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="homepage">Home Page</label>
+        <select class="form-control form-line" name="homePageId" id="homepage">
+            <option value="">Select a page</option>
+            <option th:each="page: ${pages}" th:text="${page?.title}" th:value="${page?.id}"
+                    th:selected="${page?.id==site?.homePage?.id}"></option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="contentpage">Content Page</label>
+        <select class="form-control form-line" name="contentPageId" id="contentpage">
+            <option value="">Select a page</option>
+            <option th:each="page: ${pages}" th:text="${page?.title}" th:value="${page?.id}"
+                    th:selected="${page?.id==site?.contentPage?.id}"></option>
+        </select>
     </div>
 
     <div class="form-group">

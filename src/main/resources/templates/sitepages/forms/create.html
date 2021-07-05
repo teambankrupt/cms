@@ -1,12 +1,30 @@
-<form class="form" method="post" th:action="@{/sitepages/}+${sitepage!=null?sitepage?.id:''}">
+<form class="form" method="post" th:action="@{/site-pages/}+${sitepage!=null?sitepage?.id:''}">
 
     <div class="form-group">
-        <label for="name">Name</label>
-        <input class="form-control form-line" type="text" name="name" id="name" placeholder="Name">
+        <label for="title">Title</label>
+        <input class="form-control form-line" type="text" name="title" id="title" placeholder="Title"
+               th:value="${sitepage?.title}" required minlength="20">
+    </div>
+    <div class="form-group">
+        <label for="slug">Slug</label>
+        <input class="form-control form-line" type="text" name="slug" id="slug" placeholder="Slug" th:value="${sitepage?.slug}" minlength="20">
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <input class="form-control form-line" type="text" name="description" id="description" placeholder="Description" th:value="${sitepage?.description}">
+    </div>
+    <div class="form-group">
+        <label for="content">Content</label>
+        <textarea class="form-control form-line" name="content" id="content"
+                  placeholder="Description" th:text="${sitepage?.content}" required minlength="30"></textarea>
+    </div>
+
+    <div>
+        <input type="hidden" name="siteId" th:value="${site?.id}">
     </div>
 
     <div class="form-group">
-        <a th:href="@{/sitepages}" class="btn btn-warning">Cancel</a>
+        <a th:href="@{/site-pages}" class="btn btn-warning">Cancel</a>
         <button type="submit" class="btn btn-success">Submit</button>
     </div>
 

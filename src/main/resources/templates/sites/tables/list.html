@@ -2,16 +2,24 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>Created At</th>
-        <th>Updated At</th>
-        <th>Details</th>
-        <th>Update</th>
-        <th>Delete</th>
+        <th>TITLE</th>
+        <th>DOMAIN</th>
+        <th>HOME PAGE</th>
+        <th>CONTENT PAGE</th>
+        <th>CREATED AT</th>
+        <th>UPDATED AT</th>
+        <th>DETAILS</th>
+        <th>UPDATE</th>
+        <th>DELETE</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="site: ${sites}">
         <td><a th:href="@{/sites/}+${site?.id}" th:text="${site?.id}"></a></td>
+        <td><a th:href="@{/sites/}+${site?.id}" th:text="${site?.title}"></a></td>
+        <td th:text="${site?.domain}"></td>
+        <td><a th:href="@{/site-pages/}+${site?.homePageId}" th:text="${site?.homePageTitle}"></a></td>
+        <td><a th:href="@{/site-pages/}+${site?.contentPageId}" th:text="${site?.contentPageTitle}"></a></td>
         <td th:text="${site?.createdAt}"></td>
         <td th:text="${site?.updatedAt}"></td>
         <td>

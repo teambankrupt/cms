@@ -7,6 +7,7 @@ import com.example.cms.domains.sitepages.repositories.SitePageRepository
 import com.example.cms.domains.sites.models.dtos.SiteDto
 import com.example.cms.domains.sites.models.entities.Site
 import com.example.common.utils.ExceptionUtil
+import com.example.common.utils.TextUtility
 import com.example.coreweb.domains.base.models.mappers.BaseMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -34,7 +35,11 @@ class SiteMapper @Autowired constructor(
             this.description = entity.description
             this.homePageId = entity.homePage?.id
             this.contentPageId = entity.contentPage?.id
+
             this.ownerId = entity.owner.id
+            this.ownerName = entity.owner.name
+            this.homePageTitle = entity.homePage?.title
+            this.contentPageTitle = entity.contentPage?.title
         }
 
         return dto
@@ -45,8 +50,12 @@ class SiteMapper @Autowired constructor(
 
         entity.apply {
             this.title = dto.title
-            this.domain = if (!dto.domain.isNullOrBlank()) dto.domain!! else
-                dto.title.trim().lowercase().replace(" ", "-") + ".${appDomain}"
+            this.domain = if (!dto.domain.isNullOrBlank()) dto.domain!! else {
+                val subdomain = TextUtility.removeSpecialCharacters(
+                    dto.title.trim().lowercase().replace(" ", "-")
+                )
+                subdomain + ".${appDomain}"
+            }
             this.description = dto.description
             this.tagline = dto.tagline
 

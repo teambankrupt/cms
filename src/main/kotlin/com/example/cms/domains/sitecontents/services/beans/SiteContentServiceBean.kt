@@ -17,8 +17,12 @@ class SiteContentServiceBean @Autowired constructor(
     private val siteContentRepository: SiteContentRepository
 ) : SiteContentService {
 
+    override fun searchForSite(siteId: Long, params: PageableParams): Page<SiteContent> {
+        return this.siteContentRepository.search(siteId, params.query, PageAttr.getPageRequest(params))
+    }
+
     override fun search(params: PageableParams): Page<SiteContent> {
-        return this.siteContentRepository.search(params.query, PageAttr.getPageRequest(params))
+        return this.siteContentRepository.search(null, params.query, PageAttr.getPageRequest(params))
     }
 
     override fun save(entity: SiteContent): SiteContent {
@@ -54,6 +58,6 @@ class SiteContentServiceBean @Autowired constructor(
     private fun checkAndRegenerateSlug(slug: String): String {
         val content = this.siteContentRepository.findBySlugIncludingDeleted(slug)
         if (!content.isPresent) return slug
-        return checkAndRegenerateSlug("${slug}-${SessionIdentifierGenerator.alphanumeric(6)}")
+        return checkAndRegenerateSlug("${slug}-${SessionIdentifierGenerator.alphanumeric(6)}.lowercase()")
     }
 }
