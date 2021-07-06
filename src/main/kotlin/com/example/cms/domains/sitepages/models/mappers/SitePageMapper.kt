@@ -29,6 +29,7 @@ class SitePageMapper @Autowired constructor(
             this.description = entity.description
 
             this.content = entity.content
+            this.siteId = entity.site.id
 
             this.summary = Commons.summary(entity.content,200)
         }

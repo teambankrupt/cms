@@ -51,6 +51,16 @@ class SiteContentWebController @Autowired constructor(
         return "sitecontents/fragments/details"
     }
 
+    @GetMapping(Route.V1.WEB_PREVIEW_SITECONTENT)
+    fun preview(
+        @PathVariable("id") id: Long,
+        model: Model
+    ): String {
+        val entity = this.siteContentService.find(id).orElseThrow { ExceptionUtil.notFound("SiteContent", id) }
+        model.addAttribute("content", entity.content)
+        return "sitecontents/fragments/preview"
+    }
+
     //    @GetMapping(Route.V1.WEB_CREATE_SITECONTENT_PAGE)
     override fun createPage(model: Model): String {
         return "sitecontents/fragments/create"

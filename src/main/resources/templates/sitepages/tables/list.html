@@ -6,6 +6,7 @@
         <th>CONTENT</th>
         <th>CREATED AT</th>
         <th>UPDATED AT</th>
+        <th>SITE</th>
         <th>DETAILS</th>
         <th>UPDATE</th>
         <th>DELETE</th>
@@ -18,6 +19,10 @@
         <td th:text="${sitepage?.summary}"></td>
         <td th:text="${sitepage?.getCreatedAtReadable()}"></td>
         <td th:text="${sitepage?.getUpdatedAtReadable()}"></td>
+        <td>
+            <a class="btn btn-info"
+               th:href="@{/sites/}+${sitepage?.siteId}">GO TO SITE</a>
+        </td>
         <td>
             <a class="btn btn-primary"
                th:href="@{/site-pages/}+${sitepage?.id}">Details</a>

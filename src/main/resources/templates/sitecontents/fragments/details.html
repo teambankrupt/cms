@@ -24,9 +24,13 @@
         </div>
 
         <div class="body">
-            <h4>CONTENT</h4>
+            <h4>
+                CONTENT
+                <a class="btn btn-primary pull-right" th:href="@{/site-contents/}+${sitecontent?.id}+@{/preview}"
+                           target="_blank">Preview</a>
+            </h4>
             <div class="card body">
-                <p th:utext="${sitecontent?.content}"></p>
+                <p th:text="${sitecontent?.content}"></p>
             </div>
         </div>
 

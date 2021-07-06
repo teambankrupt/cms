@@ -22,8 +22,12 @@
             <h4>ABOUT</h4>
             <p th:text="${sitepage?.description}"></p>
             <hr/>
-            <h4>CONTENT</h4>
-            <p th:utext="${sitepage?.content}"></p>
+            <h4>
+                CONTENT
+                <a class="btn btn-primary pull-right" th:href="@{/site-pages/}+${sitepage?.id}+@{/preview}"
+                           target="_blank">Preview</a>
+            </h4>
+            <p th:text="${sitepage?.content}"></p>
         </div>
 
     </div>

@@ -62,6 +62,7 @@ class Route {
             const val WEB_UPDATE_SITEPAGE_PAGE = "/site-pages/{id}/update"
             const val WEB_UPDATE_SITEPAGE = "/site-pages/{id}"
             const val WEB_DELETE_SITEPAGE = "/site-pages/{id}/delete"
+            const val WEB_PREVIEW_SITEPAGE = "/site-pages/{id}/preview"
 
             // SitePages
             const val SEARCH_SITEPAGES = "$API$VERSION/site-pages"
@@ -101,6 +102,7 @@ class Route {
             const val WEB_UPDATE_SITECONTENT_PAGE = "/site-contents/{id}/update"
             const val WEB_UPDATE_SITECONTENT = "/site-contents/{id}"
             const val WEB_DELETE_SITECONTENT = "/site-contents/{id}/delete"
+            const val WEB_PREVIEW_SITECONTENT = "/site-contents/{id}/preview"
         }
     }
 }

@@ -52,6 +52,16 @@ class SitePageWebController @Autowired constructor(
         return "sitepages/fragments/details"
     }
 
+    @GetMapping(Route.V1.WEB_PREVIEW_SITEPAGE)
+    fun preview(
+        @PathVariable("id") id: Long,
+        model: Model
+    ): String {
+        val entity = this.sitePageService.find(id).orElseThrow { ExceptionUtil.notFound("SitePage", id) }
+        model.addAttribute("content", entity.content)
+        return "sitepages/fragments/preview"
+    }
+
     //    @GetMapping(Route.V1.WEB_CREATE_SITEPAGE_PAGE)
     override fun createPage(model: Model): String {
         return "sitepages/fragments/create"

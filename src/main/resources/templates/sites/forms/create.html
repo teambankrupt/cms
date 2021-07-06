@@ -29,7 +29,7 @@
         <select class="form-control form-line" name="homePageId" id="homepage">
             <option value="">Select a page</option>
             <option th:each="page: ${pages}" th:text="${page?.title}" th:value="${page?.id}"
-                    th:selected="${page?.id==site?.homePage?.id}"></option>
+                    th:selected="${page?.id==site?.homePageId}"></option>
         </select>
     </div>
 
@@ -38,7 +38,7 @@
         <select class="form-control form-line" name="contentPageId" id="contentpage">
             <option value="">Select a page</option>
             <option th:each="page: ${pages}" th:text="${page?.title}" th:value="${page?.id}"
-                    th:selected="${page?.id==site?.contentPage?.id}"></option>
+                    th:selected="${page?.id==site?.contentPageId}"></option>
         </select>
     </div>
 
