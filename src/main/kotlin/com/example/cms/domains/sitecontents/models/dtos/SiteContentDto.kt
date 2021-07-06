@@ -1,11 +1,14 @@
 package com.example.cms.domains.sitecontents.models.dtos
 
+import com.example.common.utils.TimeUtility
 import com.example.coreweb.domains.base.models.dtos.BaseDto
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.annotations.ApiModelProperty
 import java.time.Instant
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
+import javax.validation.constraints.NotNull
 
 class SiteContentDto : BaseDto() {
 
@@ -26,7 +29,7 @@ class SiteContentDto : BaseDto() {
     var publishedOn: Instant? = null
 
     @ApiModelProperty(required = true)
-    @NotBlank
+    @NotNull
     @JsonProperty("published")
     var published: Boolean = false
 
@@ -35,4 +38,17 @@ class SiteContentDto : BaseDto() {
     @Min(1)
     var siteId: Long = 0
 
+    /*
+    READONLY
+     */
+
+    @ApiModelProperty(readOnly = true)
+    @JsonProperty("summary")
+    var summary: String? = null
+
+
+    @JsonIgnore
+    open fun getPublishedOnReadable(): String? {
+        return TimeUtility.readableDateTimeFromInstant(this.publishedOn)
+    }
 }

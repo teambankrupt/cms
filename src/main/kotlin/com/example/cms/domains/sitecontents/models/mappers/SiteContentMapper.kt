@@ -4,6 +4,7 @@ import com.example.cms.domains.sitecontents.models.dtos.SiteContentDto
 import com.example.cms.domains.sitecontents.models.entities.SiteContent
 import com.example.cms.domains.sites.models.entities.Site
 import com.example.cms.domains.sites.repositories.SiteRepository
+import com.example.common.misc.Commons
 import com.example.common.utils.ExceptionUtil
 import com.example.common.utils.TextUtility
 import com.example.coreweb.domains.base.models.mappers.BaseMapper
@@ -30,6 +31,8 @@ class SiteContentMapper @Autowired constructor(
             this.published = entity.published
             this.publishedOn = entity.publishedOn
             this.siteId = entity.site.id
+
+            this.summary = Commons.summary(entity.content, 200)
         }
 
         return dto

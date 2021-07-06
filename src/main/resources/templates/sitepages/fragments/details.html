@@ -6,17 +6,24 @@
     <div class="card">
         <div class="header">
             <h2>
-                SitePage Details <small>Description text here...</small>
+                <span th:text="${sitepage?.title}"></span>
+                <small>
+                    <span>Last updated at </span> <span th:text="${sitepage?.getUpdatedAtReadable()}"></span>
+                </small>
             </h2>
             <div class="pull-right">
-                <a th:href="@{/site-pages/create}" class="btn btn-primary">Create New</a>
-                <a th:href="@{/site-pages/}+${sitepage?.id}+@{/update}" class="btn btn-primary">Edit</a>
-                <a th:href="@{/site-pages}" class="btn btn-primary">All SitePages</a>
+                <a th:href="@{/site-pages/create}" class="btn btn-primary">CREATE NEW</a>
+                <a th:href="@{/site-pages/}+${sitepage?.id}+@{/update}" class="btn btn-primary">EDIT</a>
+                <a th:href="@{/site-pages}" class="btn btn-primary">ALL PAGES</a>
             </div>
         </div>
 
         <div class="body">
-            SitePages(<span th:text="${sitepage?.id}"></span>) details goes here
+            <h4>ABOUT</h4>
+            <p th:text="${sitepage?.description}"></p>
+            <hr/>
+            <h4>CONTENT</h4>
+            <p th:utext="${sitepage?.content}"></p>
         </div>
 
     </div>

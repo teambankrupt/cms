@@ -81,6 +81,7 @@ class SitePageWebController @Autowired constructor(
     override fun updatePage(@PathVariable("id") id: Long, model: Model): String {
         val entity = this.sitePageService.find(id).orElseThrow { ExceptionUtil.notFound("SitePage", id) }
         model.addAttribute("sitepage", this.sitePageMapper.map(entity))
+        model.addAttribute("site", this.siteMapper.map(entity.site))
         return "sitepages/fragments/create"
     }
 

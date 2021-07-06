@@ -2,30 +2,41 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>Created At</th>
-        <th>Updated At</th>
-        <th>Details</th>
-        <th>Update</th>
-        <th>Delete</th>
+        <th>TITLE</th>
+        <th>CONTENT</th>
+        <th>PUBLISHED</th>
+        <th>PUBLISHED ON</th>
+        <th>CREATED AT</th>
+        <th>UPDATED AT</th>
+        <th>DETAILS</th>
+        <th>UPDATE</th>
+        <th>DELETE</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="sitecontent: ${sitecontents}">
         <td><a th:href="@{/site-contents/}+${sitecontent?.id}" th:text="${sitecontent?.id}"></a></td>
-        <td th:text="${sitecontent?.createdAt}"></td>
-        <td th:text="${sitecontent?.updatedAt}"></td>
+        <td><a th:href="@{/site-contents/}+${sitecontent?.id}" th:text="${sitecontent?.title}"></a></td>
+        <td th:text="${sitecontent?.summary}"></td>
+        <td>
+            <label class="label label-success" th:if="${sitecontent?.published}">Published</label>
+            <label class="label label-warning" th:if="${!sitecontent?.published}">Draft</label>
+        </td>
+        <td th:text="${sitecontent?.getPublishedOnReadable()}"></td>
+        <td th:text="${sitecontent?.getCreatedAtReadable()}"></td>
+        <td th:text="${sitecontent?.getUpdatedAtReadable()}"></td>
         <td>
             <a class="btn btn-primary"
-               th:href="@{/site-contents/}+${sitecontent?.id}">Details</a>
+               th:href="@{/site-contents/}+${sitecontent?.id}">DETAILS</a>
         </td>
         <td>
             <a class="btn btn-warning"
-               th:href="@{/site-contents/}+${sitecontent?.id}+@{/update}">Update</a>
+               th:href="@{/site-contents/}+${sitecontent?.id}+@{/update}">UPDATE</a>
         </td>
         <td>
             <form method="post" th:action="@{/site-contents/}+${sitecontent?.id}+@{/delete}"
                   onclick="return confirm('Are you sure?')">
-                <button type="submit" class="btn btn-danger">Delete</button>
+                <button type="submit" class="btn btn-danger">DELETE</button>
             </form>
         </td>
     </tr>
