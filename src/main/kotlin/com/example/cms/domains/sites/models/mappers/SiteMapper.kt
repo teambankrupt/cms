@@ -66,7 +66,7 @@ class SiteMapper @Autowired constructor(
                 pageRepository.find(it).orElseThrow { ExceptionUtil.notFound(SitePage::class.java, it) }
             }
 
-            this.owner = User(SecurityContext.getCurrentUser())
+            this.owner = exEntity?.owner ?: User(SecurityContext.getCurrentUser())
         }
 
         return entity
