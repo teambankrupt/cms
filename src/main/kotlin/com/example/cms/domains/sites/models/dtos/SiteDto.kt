@@ -12,7 +12,7 @@ class SiteDto : BaseDto() {
     @JsonProperty("title")
     lateinit var title: String
 
-    @JsonProperty("title")
+    @JsonProperty("domain")
     var domain: String? = null
 
     @ApiModelProperty(required = true)
