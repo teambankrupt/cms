@@ -5,11 +5,7 @@ class Route {
         companion object {
             private const val API = "/api"
             private const val VERSION = "/v1"
-            private const val VERSION_V2 = "/v2"
             private const val ADMIN = "/admin"
-
-            const val UPLOAD_IMAGE = "$API$VERSION_V2/images"
-            const val UPLOAD_IMAGE_BULK = "$API$VERSION_V2/images/bulk"
 
             // ContentTemplates (Admin)
             const val ADMIN_SEARCH_CONTENTTEMPLATES = "$ADMIN/content-templates"
