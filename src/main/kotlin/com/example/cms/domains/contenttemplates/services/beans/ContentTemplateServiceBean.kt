@@ -34,6 +34,7 @@ class ContentTemplateServiceBean @Autowired constructor(
             val entity = this.find(id).orElseThrow { ExceptionUtil.notFound("ContentTemplate", id) }
             entity.isDeleted = true
             this.contentTemplateRepository.save(entity)
+            return
         }
         this.contentTemplateRepository.deleteById(id)
     }

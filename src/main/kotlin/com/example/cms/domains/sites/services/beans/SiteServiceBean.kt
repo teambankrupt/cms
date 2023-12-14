@@ -38,6 +38,7 @@ class SiteServiceBean @Autowired constructor(
             val entity = this.find(id).orElseThrow { ExceptionUtil.notFound("Site", id) }
             entity.isDeleted = true
             this.siteRepository.save(entity)
+            return
         }
         this.siteRepository.deleteById(id)
     }

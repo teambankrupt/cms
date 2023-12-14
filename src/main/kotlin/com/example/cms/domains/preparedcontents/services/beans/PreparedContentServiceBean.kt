@@ -74,6 +74,7 @@ class PreparedContentServiceBean @Autowired constructor(
             val entity = this.find(id).orElseThrow { ExceptionUtil.notFound("PreparedContent", id) }
             entity.isDeleted = true
             this.preparedContentRepository.save(entity)
+            return
         }
         this.preparedContentRepository.deleteById(id)
     }
