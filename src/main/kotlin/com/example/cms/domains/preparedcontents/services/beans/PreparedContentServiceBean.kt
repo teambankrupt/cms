@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import java.util.*
 import com.example.coreweb.utils.PageableParams
+import dev.sayem.jsontotable.HtmlTable
 import org.springframework.beans.factory.annotation.Value
 
 @Service
