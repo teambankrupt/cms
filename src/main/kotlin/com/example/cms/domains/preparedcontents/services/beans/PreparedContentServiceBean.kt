@@ -4,6 +4,7 @@ import com.example.auth.config.security.SecurityContext
 import com.example.cms.domains.contenttemplates.models.entities.ContentTemplate
 import com.example.cms.domains.contenttemplates.repositories.ContentTemplateRepository
 import com.example.cms.domains.preparedcontents.models.ContentStatuses
+import com.example.cms.domains.preparedcontents.models.entities.DYNAMIC_CONTENT_KEY
 import com.example.cms.domains.preparedcontents.models.entities.PreparedContent
 import com.example.cms.domains.preparedcontents.repositories.PreparedContentRepository
 import com.example.cms.domains.preparedcontents.services.PreparedContentService
@@ -63,6 +64,14 @@ class PreparedContentServiceBean @Autowired constructor(
 
     override fun save(entity: PreparedContent): PreparedContent {
         this.validate(entity)
+        val placeholders = entity.placeholderValues.mapValues {
+            if (it.key == DYNAMIC_CONTENT_KEY) {
+                HtmlTable.fromJson(it.value, listOf("dynamic-table"))
+            } else {
+                it.value
+            }
+        }
+        entity.resolvedContent = Commons.replacePlaceholders(entity.template.content, placeholders)
         return this.preparedContentRepository.save(entity)
     }
 

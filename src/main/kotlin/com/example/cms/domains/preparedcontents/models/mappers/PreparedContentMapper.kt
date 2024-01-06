@@ -7,6 +7,7 @@ import com.example.cms.domains.preparedcontents.models.entities.PreparedContent
 import com.example.common.misc.Commons
 import com.example.common.utils.ExceptionUtil
 import com.example.coreweb.domains.base.models.mappers.BaseMapper
+import dev.sayem.jsontotable.HtmlTable
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.util.*
@@ -55,7 +56,6 @@ class PreparedContentMapper @Autowired constructor(
             this.placeholderValues = dto.placeholderValues
             this.template = templateRepository.find(dto.templateId)
                 .orElseThrow { ExceptionUtil.notFound(PreparedContent::class.java, dto.templateId) }
-            this.resolvedContent = Commons.replacePlaceholders(this.template.content, dto.placeholderValues)
         }
 
         return entity

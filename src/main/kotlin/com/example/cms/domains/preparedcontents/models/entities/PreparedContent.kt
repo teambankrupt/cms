@@ -34,3 +34,5 @@ class PreparedContent : BaseEntity() {
     lateinit var status: ContentStatuses
 
 }
+
+const val DYNAMIC_CONTENT_KEY = "DYNAMIC_CONTENT"
