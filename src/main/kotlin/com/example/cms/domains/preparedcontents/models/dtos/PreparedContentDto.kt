@@ -25,8 +25,10 @@ class PreparedContentDto : BaseDto() {
     @ApiModelProperty(required = true)
     var placeholderValues: HashMap<String, String> = HashMap()
 
-    @JsonProperty("css_style_classes")
-    var cssStyleClasses: String? = null
+    @NotNull
+    @JsonProperty("css_classes")
+    @ApiModelProperty(required = true)
+    var cssClasses: String = ""
 
     /*
     READONLY

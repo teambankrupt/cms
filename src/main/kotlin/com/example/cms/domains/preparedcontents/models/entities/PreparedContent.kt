@@ -33,8 +33,8 @@ class PreparedContent : BaseEntity() {
     @Column(name = "status", nullable = false)
     lateinit var status: ContentStatuses
 
-    @Column(name = "css_style_classes")
-    var cssStyleClasses: String? = null
+    @Column(name = "css_classes")
+    var cssClasses: String? = null
 }
 
 const val DYNAMIC_CONTENT_KEY = "DYNAMIC_CONTENT"

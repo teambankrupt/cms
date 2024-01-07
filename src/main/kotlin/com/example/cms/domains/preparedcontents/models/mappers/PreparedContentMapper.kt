@@ -29,7 +29,7 @@ class PreparedContentMapper @Autowired constructor(
                 this.placeholderValues[it.key] = it.value
             }
 
-            this.cssStyleClasses = entity.cssStyleClasses
+            this.cssClasses = entity.cssClasses
             this.status = entity.status
             this.resolvedContent = entity.resolvedContent
             this.templateTitle = entity.template.title
@@ -50,7 +50,7 @@ class PreparedContentMapper @Autowired constructor(
         entity.apply {
             this.title = dto.title
             this.status = ContentStatuses.DRAFT
-            this.cssStyleClasses = dto.cssStyleClasses
+            this.cssClasses = dto.cssClasses
             this.placeholderValues = dto.placeholderValues
             this.template = templateRepository.find(dto.templateId)
                 .orElseThrow { ExceptionUtil.notFound(PreparedContent::class.java, dto.templateId) }
