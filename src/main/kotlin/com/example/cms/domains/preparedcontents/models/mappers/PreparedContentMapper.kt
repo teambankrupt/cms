@@ -4,14 +4,10 @@ import com.example.cms.domains.contenttemplates.repositories.ContentTemplateRepo
 import com.example.cms.domains.preparedcontents.models.ContentStatuses
 import com.example.cms.domains.preparedcontents.models.dtos.PreparedContentDto
 import com.example.cms.domains.preparedcontents.models.entities.PreparedContent
-import com.example.common.misc.Commons
 import com.example.common.utils.ExceptionUtil
 import com.example.coreweb.domains.base.models.mappers.BaseMapper
-import dev.sayem.jsontotable.HtmlTable
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.util.*
-import kotlin.collections.HashMap
 
 @Component
 class PreparedContentMapper @Autowired constructor(
@@ -33,6 +29,7 @@ class PreparedContentMapper @Autowired constructor(
                 this.placeholderValues[it.key] = it.value
             }
 
+            this.cssClasses = entity.cssClasses
             this.status = entity.status
             this.resolvedContent = entity.resolvedContent
             this.templateTitle = entity.template.title
@@ -53,6 +50,7 @@ class PreparedContentMapper @Autowired constructor(
         entity.apply {
             this.title = dto.title
             this.status = ContentStatuses.DRAFT
+            this.cssClasses = dto.cssClasses
             this.placeholderValues = dto.placeholderValues
             this.template = templateRepository.find(dto.templateId)
                 .orElseThrow { ExceptionUtil.notFound(PreparedContent::class.java, dto.templateId) }

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.annotations.ApiModelProperty
 import javax.validation.constraints.Min
 import javax.validation.constraints.NotBlank
-import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
 
 class PreparedContentDto : BaseDto() {
@@ -25,6 +24,11 @@ class PreparedContentDto : BaseDto() {
     @JsonProperty("placeholder_values")
     @ApiModelProperty(required = true)
     var placeholderValues: HashMap<String, String> = HashMap()
+
+    @NotNull
+    @JsonProperty("css_classes")
+    @ApiModelProperty(required = true)
+    var cssClasses: String = ""
 
     /*
     READONLY
