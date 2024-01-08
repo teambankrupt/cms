@@ -66,7 +66,7 @@ class PreparedContentServiceBean @Autowired constructor(
         this.validate(entity)
         val placeholders = entity.placeholderValues.mapValues {
             if (it.key == DYNAMIC_CONTENT_KEY) {
-                HtmlTable.fromJson(it.value, entity.cssClasses?.split(" ") ?: listOf("dynamic-table"))
+                HtmlTable.fromJson(it.value, entity.cssClasses.split(" "))
             } else {
                 it.value
             }
