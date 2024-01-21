@@ -51,8 +51,7 @@ class PreparedContentServiceBean @Autowired constructor(
         content.resolvedContent = Commons.replacePlaceholders(template.content, placeholderValues)
         content.status = ContentStatuses.FINALIZED
         content = this.save(content)
-        return "${this.baseUrl}${Route.V1.PREPAREDCONTENT_CONTENT_HTML.replace("{id}", content.id.toString())}" +
-                "?access_token=${SecurityContext.getToken()}"
+        return content.resolvedContent
     }
 
     override fun changeStatus(contentId: Long, status: ContentStatuses): PreparedContent {
