@@ -1,7 +1,9 @@
 package com.example.cms.domains.preparedcontents.controllers.web
 
+import arrow.core.getOrElse
+import com.example.auth.config.security.SecurityContext
 import com.example.cms.domains.contenttemplates.models.entities.ContentTemplate
-import com.example.cms.domains.contenttemplates.services.ContentTemplateService
+import com.example.cms.domains.contenttemplates.services.beans.ContentTemplateService
 import com.example.cms.domains.preparedcontents.models.ContentStatuses
 import com.example.cms.domains.preparedcontents.models.dtos.PreparedContentDto
 import com.example.cms.domains.preparedcontents.models.dtos.ReportMailDto
@@ -110,8 +112,8 @@ class PreparedContentWebController @Autowired constructor(
                 null, 0, 100, SortByFields.ID, Sort.Direction.DESC
             )
         )
-        val selectedTemplate = this.contentTemplateService.find(templateId)
-            .orElseThrow { ExceptionUtil.notFound(ContentTemplate::class.java, templateId) }
+        val selectedTemplate = this.contentTemplateService.find(id = templateId, asUser = SecurityContext.getCurrentUser())
+            .getOrElse { throw ExceptionUtil.notFound(ContentTemplate::class.java, templateId) }
         model.addAttribute("templates", templates)
         model.addAttribute("selectedTemplate", selectedTemplate)
         return "preparedcontents/fragments/create"

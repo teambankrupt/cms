@@ -18,4 +18,7 @@ interface ContentTemplateRepository : JpaRepository<ContentTemplate, Long> {
     @Query("SELECT e FROM ContentTemplate e WHERE e.id=:id AND e.deleted=FALSE")
     fun find(@Param("id") id: Long): Optional<ContentTemplate>
 
+    @Query("SELECT e FROM ContentTemplate e WHERE e.code=:code AND e.deleted=FALSE")
+    fun findByCode(@Param("code") code: String): Optional<ContentTemplate>
+
 }

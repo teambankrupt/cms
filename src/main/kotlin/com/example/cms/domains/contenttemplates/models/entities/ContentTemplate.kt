@@ -2,13 +2,14 @@ package com.example.cms.domains.contenttemplates.models.entities
 
 import com.example.cms.domains.contenttemplates.models.enums.TemplateTypes
 import com.example.coreweb.domains.base.entities.BaseEntity
+import com.example.coreweb.domains.base.entities.BaseEntityV2
 import org.hibernate.annotations.LazyCollection
 import org.hibernate.annotations.LazyCollectionOption
 import javax.persistence.*
 
 @Entity
 @Table(name = "content_templates", schema = "cms")
-class ContentTemplate : BaseEntity() {
+class ContentTemplate : BaseEntityV2() {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
@@ -16,6 +17,9 @@ class ContentTemplate : BaseEntity() {
 
     @Column(name = "title", nullable = false)
     lateinit var title: String
+
+    @Column(name = "code", nullable = false, unique = true)
+    lateinit var code: String
 
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     lateinit var content: String

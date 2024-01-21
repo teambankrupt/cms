@@ -9,18 +9,23 @@ import javax.validation.constraints.NotNull
 
 class ContentTemplateDto : BaseDto() {
 
-    @NotNull
-    @JsonProperty("type")
+    @field:NotNull
+    @field:JsonProperty("type")
     @ApiModelProperty(required = true)
     lateinit var type: TemplateTypes
 
-    @NotBlank
-    @JsonProperty("title")
+    @field:NotBlank
+    @field:JsonProperty("title")
     @ApiModelProperty(required = true)
     lateinit var title: String
 
-    @NotBlank
-    @JsonProperty("content")
+    @field:NotBlank
+    @field:JsonProperty("code")
+    @ApiModelProperty(required = true)
+    lateinit var code: String
+
+    @field:NotBlank
+    @field:JsonProperty("content")
     @ApiModelProperty(required = true)
     lateinit var content: String
 
@@ -28,7 +33,7 @@ class ContentTemplateDto : BaseDto() {
     READONLY PROPERTIES
      */
 
-    @JsonProperty("placeholders")
+    @field:JsonProperty("placeholders")
     @ApiModelProperty(readOnly = true)
     var placeholders: Set<String> = HashSet()
 
