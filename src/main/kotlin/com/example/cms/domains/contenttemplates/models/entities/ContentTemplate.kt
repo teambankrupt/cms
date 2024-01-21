@@ -24,6 +24,9 @@ class ContentTemplate : BaseEntityV2() {
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     lateinit var content: String
 
+    @Column(name = "css_classes", nullable = true)
+    var cssClasses: String = ""
+
     @ElementCollection
     @LazyCollection(LazyCollectionOption.FALSE)
     @CollectionTable(name = "c_template_placeholders", schema = "cms")

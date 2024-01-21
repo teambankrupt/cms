@@ -24,6 +24,11 @@ class ContentTemplateDto : BaseDto() {
     @ApiModelProperty(required = true)
     lateinit var code: String
 
+    @field:NotNull
+    @field:JsonProperty("css_classes")
+    @ApiModelProperty(required = true)
+    var cssClasses: String = ""
+
     @field:NotBlank
     @field:JsonProperty("content")
     @ApiModelProperty(required = true)

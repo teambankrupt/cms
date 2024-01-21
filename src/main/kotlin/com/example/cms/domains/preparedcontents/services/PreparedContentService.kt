@@ -8,6 +8,6 @@ import org.springframework.data.domain.Page
 
 interface PreparedContentService : CrudServiceV3<PreparedContent> {
     fun search(templateId: Long?, params: PageableParams): Page<PreparedContent>
-    fun generateHtmlForTemplate(templateId: Long, title: String, placeholderValues: Map<String, String>): String
+    fun generateHtmlForTemplate(templateCode: String, title: String, placeholderValues: Map<String, String>): String
     fun changeStatus(contentId: Long, status: ContentStatuses): PreparedContent
 }

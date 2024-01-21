@@ -25,6 +25,7 @@ class ContentTemplateMapper : BaseMapperV2<ContentTemplate, ContentTemplateDto> 
             this.title = entity.title
             this.code = entity.code
             this.content = entity.content
+            this.cssClasses = entity.cssClasses
             this.placeholders = entity.placeholders
         }
 
@@ -39,6 +40,7 @@ class ContentTemplateMapper : BaseMapperV2<ContentTemplate, ContentTemplateDto> 
             this.title = dto.title
             this.code = dto.code
             this.content = dto.content
+            this.cssClasses = dto.cssClasses
             this.placeholders = Commons.matchPlaceholders(this.content)
         }
 

@@ -38,12 +38,12 @@ class PreparedContentServiceBean @Autowired constructor(
     }
 
     override fun generateHtmlForTemplate(
-        templateId: Long,
+        templateCode: String,
         title: String,
         placeholderValues: Map<String, String>
     ): String {
-        val template = this.templateRepository.find(templateId)
-            .orElseThrow { ExceptionUtil.notFound(ContentTemplate::class.java, templateId) }
+        val template = this.templateRepository.findByCode(templateCode)
+            .orElseThrow { ExceptionUtil.notFound("Couldn't find template with code: $templateCode") }
         var content = PreparedContent()
         content.template = template
         content.title = title
@@ -66,7 +66,7 @@ class PreparedContentServiceBean @Autowired constructor(
         this.validate(entity)
         val placeholders = entity.placeholderValues.mapValues {
             if (it.key == DYNAMIC_CONTENT_KEY) {
-                HtmlTable.fromJson(it.value, entity.cssClasses.split(" "))
+                HtmlTable.fromJson(it.value, entity.template.cssClasses.split(" "))
             } else {
                 it.value
             }

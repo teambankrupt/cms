@@ -10,39 +10,34 @@ import javax.validation.constraints.NotNull
 
 class PreparedContentDto : BaseDto() {
 
-    @NotBlank
-    @JsonProperty("title")
+    @field:NotBlank
+    @field:JsonProperty("title")
     @ApiModelProperty(required = true)
     lateinit var title: String
 
-    @Min(1)
-    @JsonProperty("template_id")
+    @field:Min(1)
+    @field:JsonProperty("template_id")
     @ApiModelProperty(required = true)
     var templateId: Long = 0
 
-    @NotNull
-    @JsonProperty("placeholder_values")
+    @field:NotNull
+    @field:JsonProperty("placeholder_values")
     @ApiModelProperty(required = true)
     var placeholderValues: HashMap<String, String> = HashMap()
-
-    @NotNull
-    @JsonProperty("css_classes")
-    @ApiModelProperty(required = true)
-    var cssClasses: String = ""
 
     /*
     READONLY
      */
     @ApiModelProperty(readOnly = true)
-    @JsonProperty("status")
+    @field:JsonProperty("status")
     var status: ContentStatuses? = null
 
     @ApiModelProperty(readOnly = true)
-    @JsonProperty("resolved_content")
+    @field:JsonProperty("resolved_content")
     var resolvedContent: String? = null
 
     @ApiModelProperty(readOnly = true)
-    @JsonProperty("template_title")
+    @field:JsonProperty("template_title")
     var templateTitle: String? = null
 
     fun isFinalized(): Boolean {
