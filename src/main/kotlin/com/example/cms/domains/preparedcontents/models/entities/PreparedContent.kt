@@ -5,6 +5,7 @@ import com.example.cms.domains.preparedcontents.models.ContentStatuses
 import com.example.coreweb.domains.base.entities.BaseEntity
 import org.hibernate.annotations.LazyCollection
 import org.hibernate.annotations.LazyCollectionOption
+import org.json.JSONML
 import javax.persistence.*
 
 @Entity
@@ -35,4 +36,3 @@ class PreparedContent : BaseEntity() {
 
 }
 
-const val DYNAMIC_CONTENT_KEY = "DYNAMIC_CONTENT"

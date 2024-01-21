@@ -1,24 +1,21 @@
 package com.example.cms.domains.preparedcontents.services.beans
 
-import com.example.auth.config.security.SecurityContext
-import com.example.cms.domains.contenttemplates.models.entities.ContentTemplate
+import com.example.cms.domains.contenttemplates.models.entities.DynamicContent
 import com.example.cms.domains.contenttemplates.repositories.ContentTemplateRepository
 import com.example.cms.domains.preparedcontents.models.ContentStatuses
-import com.example.cms.domains.preparedcontents.models.entities.DYNAMIC_CONTENT_KEY
 import com.example.cms.domains.preparedcontents.models.entities.PreparedContent
 import com.example.cms.domains.preparedcontents.repositories.PreparedContentRepository
 import com.example.cms.domains.preparedcontents.services.PreparedContentService
-import com.example.cms.routing.Route
 import com.example.common.misc.Commons
 import com.example.common.utils.ExceptionUtil
 import com.example.coreweb.utils.PageAttr
+import com.example.coreweb.utils.PageableParams
+import dev.sayem.jsontotable.HtmlTable
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import java.util.*
-import com.example.coreweb.utils.PageableParams
-import dev.sayem.jsontotable.HtmlTable
-import org.springframework.beans.factory.annotation.Value
 
 @Service
 class PreparedContentServiceBean @Autowired constructor(
@@ -38,17 +35,26 @@ class PreparedContentServiceBean @Autowired constructor(
     }
 
     override fun generateHtmlForTemplate(
-        templateCode: String,
+        template: String,
         title: String,
-        placeholderValues: Map<String, String>
+        placeholderValues: LinkedHashMap<String, String>,
+        dynamicContent: DynamicContent
     ): String {
-        val template = this.templateRepository.findByCode(templateCode)
-            .orElseThrow { ExceptionUtil.notFound("Couldn't find template with code: $templateCode") }
+        val cTemplate = this.templateRepository.findByCode(template)
+            .orElseThrow { ExceptionUtil.notFound("Couldn't find template with code: $template") }
         var content = PreparedContent()
-        content.template = template
+        content.template = cTemplate
         content.title = title
         content.placeholderValues = placeholderValues.toMutableMap()
-        content.resolvedContent = Commons.replacePlaceholders(template.content, placeholderValues)
+        when(dynamicContent) {
+            is DynamicContent.Json -> {
+                content.placeholderValues[dynamicContent.key] = HtmlTable.fromJson(dynamicContent.json, cTemplate.cssClasses.split(" "))
+            }
+            is DynamicContent.ListType -> {
+                content.placeholderValues[dynamicContent.key] = HtmlTable.toHtml(dynamicContent.headers, dynamicContent.list, cTemplate.cssClasses)
+            }
+        }
+        content.resolvedContent = Commons.replacePlaceholders(cTemplate.content, content.placeholderValues)
         content.status = ContentStatuses.FINALIZED
         content = this.save(content)
         return content.resolvedContent
@@ -64,7 +70,7 @@ class PreparedContentServiceBean @Autowired constructor(
     override fun save(entity: PreparedContent): PreparedContent {
         this.validate(entity)
         val placeholders = entity.placeholderValues.mapValues {
-            if (it.key == DYNAMIC_CONTENT_KEY) {
+            if (it.key == DynamicContent.Json::key.name) {
                 HtmlTable.fromJson(it.value, entity.template.cssClasses.split(" "))
             } else {
                 it.value

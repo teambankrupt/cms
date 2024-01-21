@@ -1,7 +1,6 @@
 package com.example.cms.domains.contenttemplates.models.entities
 
 import com.example.cms.domains.contenttemplates.models.enums.TemplateTypes
-import com.example.coreweb.domains.base.entities.BaseEntity
 import com.example.coreweb.domains.base.entities.BaseEntityV2
 import org.hibernate.annotations.LazyCollection
 import org.hibernate.annotations.LazyCollectionOption
@@ -31,4 +30,10 @@ class ContentTemplate : BaseEntityV2() {
     @LazyCollection(LazyCollectionOption.FALSE)
     @CollectionTable(name = "c_template_placeholders", schema = "cms")
     lateinit var placeholders: Set<String>
+}
+
+
+sealed class DynamicContent(val key: String) {
+    data class Json(val json: String) : DynamicContent("DYNAMIC_CONTENT_JSON")
+    data class ListType(val headers: List<String>, val list: List<List<String>>) : DynamicContent("DYNAMIC_CONTENT")
 }

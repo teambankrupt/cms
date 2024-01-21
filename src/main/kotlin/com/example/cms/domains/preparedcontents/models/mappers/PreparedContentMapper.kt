@@ -33,7 +33,7 @@ class PreparedContentMapper @Autowired constructor(
             this.resolvedContent = entity.resolvedContent
             this.templateTitle = entity.template.title
 
-            if (this.placeholderValues.isNullOrEmpty()) {
+            if (this.placeholderValues.isEmpty()) {
                 entity.template.placeholders.forEach {
                     this.placeholderValues[it] = ""
                 }
