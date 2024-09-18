@@ -8,13 +8,15 @@ import com.example.coreweb.utils.PageableParams
 import org.springframework.data.domain.Page
 
 interface PreparedContentService : CrudServiceV3<PreparedContent> {
-    fun search(templateId: Long?, params: PageableParams): Page<PreparedContent>
-    fun generateHtmlForTemplate(
-        template: String,
-        title: String,
-        placeholderValues: LinkedHashMap<String, String>,
-        dynamicContent: DynamicContent
-    ): String
+	fun search(templateId: Long?, params: PageableParams): Page<PreparedContent>
+	fun generateHtmlForTemplate(
+		template: String,
+		title: String,
+		placeholderValues: LinkedHashMap<String, String>,
+		dynamicContent: DynamicContent
+	): String
 
-    fun changeStatus(contentId: Long, status: ContentStatuses): PreparedContent
+	fun changeStatus(contentId: Long, status: ContentStatuses): PreparedContent
+
+	fun preparePageContent(contentId: Long?, title: String, content: String): PreparedContent
 }
