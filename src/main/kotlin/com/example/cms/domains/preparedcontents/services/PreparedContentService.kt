@@ -18,5 +18,5 @@ interface PreparedContentService : CrudServiceV3<PreparedContent> {
 
 	fun changeStatus(contentId: Long, status: ContentStatuses): PreparedContent
 
-	fun preparePageContent(contentId: Long?, title: String, content: String): PreparedContent
+	fun preparePageContent(contentId: Long? = null, title: String, content: String): PreparedContent
 }
